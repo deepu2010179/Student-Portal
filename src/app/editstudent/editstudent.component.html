@@ -1,0 +1,155 @@
+
+  <div class="container my-5">
+
+    <h1 class="mb-3 head">Edit Student ({{this.editStudentrequest1.name}})</h1>
+    <form #form="ngForm" (ngSubmit)="updatestudent()">
+     <div class="row">
+       <div class="col-6">
+        <div class="mb-3 l1">
+          <label for="code" class="form-label">Code:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="code"
+            [(ngModel)]="editStudentrequest1.code"
+            name="code"
+            readonly
+          />
+        </div>
+          <div class="mb-3 l1">
+            <label for="name" class="form-label">Name:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              #st
+              [(ngModel)]="editStudentrequest1.name"
+              name="name"
+            />
+          </div>
+          <div class="mb-3 l3">
+            <label for="address2" class="form-label">Address2:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="address2"
+              [(ngModel)]="editStudentrequest1.address2"
+              name="address2"
+            />
+          </div>
+          <div class="mb-3 l4">
+            <label for="city" class="form-label">City:</label>
+            <select
+              id="city"
+              class="custom-select form-control"
+              [(ngModel)]="editStudentrequest1.cityId"
+              name="city"
+            >
+              <option selected>Select City</option>
+              <option *ngFor="let city of cities" [value]="city.id">
+                {{ city.name }}
+              </option>
+            </select>
+          </div>
+          <div class="mb-3 l2" [formGroup]="formGrp" novalidate>
+            <label for="mobile" class="form-label">Mobile:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="mobile"
+              [(ngModel)]="editStudentrequest1.mobile"
+              name="mobile"
+              formControlName="mobileNumber"
+              ng-model-options="{standalone:true}"
+            />
+            <div *ngIf="mobno['mobileNumber'].touched && mobno['mobileNumber'].invalid" class="show">
+              <div *ngIf="mobno['mobileNumber'].errors?.['required'] &&mobno['mobileNumber'].dirty">*Please enter Mobile Number</div>
+              <div *ngIf="mobno['mobileNumber'].errors?.['pattern'] &&mobno['mobileNumber'].dirty">*Please enter valid(10 digit) Mobile Number</div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-outline-success custom" [disabled]="!formGrp.valid" (click)="doSubmit(); doSubmit1();">Save</button>
+  
+      </div>
+      <div class="col-6">
+        <div class="mb-3 l1" [formGroup]="formGrp" novalidate>
+          <label for="email" class="form-label">Email:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="email"
+            [(ngModel)]="editStudentrequest1.email"
+            name="email"
+            formControlName="eMail"
+              ng-model-options="{standalone:true}"
+          />
+          <div *ngIf="mobno['eMail'].touched && mobno['eMail'].invalid" class="show">
+            <div *ngIf="mobno['eMail'].errors?.['required'] &&mobno['eMail'].dirty">*Please enter Email Id</div>
+            <div *ngIf="mobno['eMail'].errors?.['pattern'] &&mobno['eMail'].dirty">*Please enter valid Email Id</div>
+          </div>
+        </div>
+        <div class="mb-3 l2">
+          <label for="address1" class="form-label">Address1:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="address1"
+            [(ngModel)]="editStudentrequest1.address1"
+            name="address1"
+          />
+        </div>
+        <div class="mb-3 l3" *ngIf="states.length > 0">
+          <label for="state" class="form-label">State:</label>
+          <select
+            id="state"
+            class="custom-select form-control"
+            [(ngModel)]="editStudentrequest1.stateId"
+            name="state"
+            #state
+           (change)="onStateChange()"
+  
+          >
+            <option selected>Select State</option>
+            <option *ngFor="let state of states" [value]="state.id">
+              {{ state.name }}
+            </option>
+          </select>
+        </div>
+        <div class="mb-3 l5">
+          <label for="maritalStatus" class="form-label">Marital Status:</label>
+          <select id="maritalStatus" class="custom-select form-control" [(ngModel)]="editStudentrequest1.maritalStatus" name="maritalStatus">
+          <option value="select" aria-selected="true" selected>--Select--</option>
+          <option value="0">Single</option>
+          <option value="1">Married</option>
+          <option value="2">Separated</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <div class="form-check form-check-inline">
+            <input
+              type="radio"
+              class="form-check-input"
+              value="0"
+              id="gender1"
+              name="gender"
+              [(ngModel)]="editStudentrequest1.gender"
+              [value]="0"
+            />
+            <label for="gender" class="form-check-label">Male</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input
+              type="radio"
+              class="form-check-input"
+              value="1"
+              id="gender"
+              name="gender"
+              [(ngModel)]="editStudentrequest1.gender"
+              [value]="1"
+            />
+            <label for="gender" class="form-check-label">Female</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    </form>
+  </div>

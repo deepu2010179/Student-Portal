@@ -1,0 +1,12 @@
+.radio{
+    display:flex
+}
+.custom {
+    width: 78px !important;
+}
+.show{
+    color: red;
+}
+.head{
+    color:green;
+}
