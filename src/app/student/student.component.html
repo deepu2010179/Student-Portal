@@ -1,45 +1,47 @@
 <div class="container-fluid">
     <h1 class="d-flex justify-content-center head">Student Record</h1>
-    <table class="table table-success table-striped mt-3" *ngIf="students&&students.length>0">
-      <thead>
-        <tr>
-          <th>Select</th>
-          <th>Code</th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Mobile No.</th>
-          <th>Address1</th>
-          <th>Address2</th>
-          <th>State</th>
-          <th>City</th>
-          <th>Gender</th>
-          <th>Marital Status</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor = "let student of students">
-          <td><input type="checkbox" [checked]="isSelected(student)" (change)="checkSelection(student)"></td>
-          <td><span>{{student.code}}</span></td>
-          <td><span>{{student.name}}</span></td>
-          <td><span>{{student.email}}</span></td>
-          <td><span>{{student.mobile}}</span></td>
-          <td><span>{{student.address1}}</span></td>
-          <td><span>{{student.address2}}</span></td>
-          <td><span>{{student.stateName}}</span></td>
-          <td><span>{{student.cityName}}</span></td>
-          <td><span>{{student.genderName}}</span></td>
-          <td><span>{{student.maritalStatusName}}</span></td>
-          <td><p><button type="button" class="btn btn-outline-primary btn-sm custom" [routerLink]="['/students','edit',student.id]">Edit</button></p>
-          </td>
-        </tr>
-      </tbody>
-      <br>
-      <button type="button" class="btn btn-outline-danger custom" (click)="deleteSelectedRecords()" [disabled]="selectedRecords.length === 0">
-        Delete
-      </button>
-    </table>
-    
+    <div class="table-responsive">
+      <table class="table table-success table-bordered table-striped mt-3" *ngIf="students&&students.length>0">
+        <thead>
+          <tr>
+            <th>Select</th>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Mobile No.</th>
+            <th>Address1</th>
+            <th>Address2</th>
+            <th>State</th>
+            <th>City</th>
+            <th>Gender</th>
+            <th>Marital Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor = "let student of students">
+            <td><input type="checkbox" [checked]="isSelected(student)" (change)="checkSelection(student)"></td>
+            <td><span>{{student.code}}</span></td>
+            <td><span>{{student.name}}</span></td>
+            <td><span>{{student.email}}</span></td>
+            <td><span>{{student.mobile}}</span></td>
+            <td><span>{{student.address1}}</span></td>
+            <td><span>{{student.address2}}</span></td>
+            <td><span>{{student.stateName}}</span></td>
+            <td><span>{{student.cityName}}</span></td>
+            <td><span>{{student.genderName}}</span></td>
+            <td><span>{{student.maritalStatusName}}</span></td>
+            <td><p><button type="button" class="btn btn-outline-primary btn-sm custom" [routerLink]="['/students','edit',student.id]">Edit</button></p>
+            </td>
+          </tr>
+        </tbody>
+        <br>
+        <button type="button" class="btn btn-outline-danger custom" (click)="conf()" [disabled]="selectedRecords.length === 0">
+          Delete
+        </button>
+      </table>
+    </div>
+    <div *ngIf="showmessage" class="successmessage">Selected Records are deleted successfully!!</div>
     <h5 *ngIf="!students||students.length<=0" class="alert alert-danger">Not Found!!</h5>
   </div>
   

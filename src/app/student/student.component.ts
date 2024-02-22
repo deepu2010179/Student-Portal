@@ -12,6 +12,7 @@ import { Console } from 'console';
 })
 export class StudentComponent implements OnInit{
   students:student[]=[];
+  showmessage = false;
   maritals = ['0-Single','1-Married','2-Separated'];
   selectedRecords: Array<student> = [];
   state: any;
@@ -43,17 +44,29 @@ export class StudentComponent implements OnInit{
   refresh(): void {
     window.location.reload();
 }
+txt:boolean=false;
+conf(){
+  if (confirm("Selected Records will be deleted")) {
+    this.txt = true;
+  } else {
+    this.txt = false;
+  }
+  if(this.txt)
+  this.deleteSelectedRecords();
+}
   deleteSelectedRecords() {
+    this.showmessage = false;
     this.selectedRecords.forEach(recordId => {
       this.studentService.deleteStudent(recordId.id).subscribe(
         () => {
-          this.refresh();
         },
         error => {
           console.error('Error deleting record:', error);
         }
       );
     });
+    this.showmessage=true;
+    this.refresh();
   }
   deleteStudent(id:number){
     this.studentService.deleteStudent(id).subscribe({

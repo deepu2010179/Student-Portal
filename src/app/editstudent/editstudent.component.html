@@ -2,7 +2,7 @@
   <div class="container my-5">
 
     <h1 class="mb-3 head">Edit Student ({{this.editStudentrequest1.name}})</h1>
-    <form #form="ngForm" (ngSubmit)="updatestudent()">
+    <form #form="ngForm" (ngSubmit)="conf()">
      <div class="row">
        <div class="col-6">
         <div class="mb-3 l1">
@@ -60,8 +60,10 @@
               [(ngModel)]="editStudentrequest1.mobile"
               name="mobile"
               formControlName="mobileNumber"
+              (change)="Checkmobile(editStudentrequest1.mobile)"
               ng-model-options="{standalone:true}"
             />
+            <div *ngIf="this.bool2" class="show">*Mobile Number Already exists!!</div>
             <div *ngIf="mobno['mobileNumber'].touched && mobno['mobileNumber'].invalid" class="show">
               <div *ngIf="mobno['mobileNumber'].errors?.['required'] &&mobno['mobileNumber'].dirty">*Please enter Mobile Number</div>
               <div *ngIf="mobno['mobileNumber'].errors?.['pattern'] &&mobno['mobileNumber'].dirty">*Please enter valid(10 digit) Mobile Number</div>
@@ -80,8 +82,10 @@
             [(ngModel)]="editStudentrequest1.email"
             name="email"
             formControlName="eMail"
+            (change)="Checkemail(editStudentrequest1.email)"
               ng-model-options="{standalone:true}"
           />
+          <div *ngIf="this.bool1" class="show">*Email Id Already exists!!</div>
           <div *ngIf="mobno['eMail'].touched && mobno['eMail'].invalid" class="show">
             <div *ngIf="mobno['eMail'].errors?.['required'] &&mobno['eMail'].dirty">*Please enter Email Id</div>
             <div *ngIf="mobno['eMail'].errors?.['pattern'] &&mobno['eMail'].dirty">*Please enter valid Email Id</div>

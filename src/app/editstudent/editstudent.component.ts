@@ -90,6 +90,16 @@ export class EditstudentComponent implements OnInit {
       this.states = states;
     });
   }
+  txt:boolean=false;
+conf(){
+  if (confirm("Are you sure ?")) {
+    this.txt = true;
+  } else {
+    this.txt = false;
+  }
+  if(this.txt)
+  this.updatestudent();
+}
   updatestudent(){
     this.studentservice.updateStudent(this.editStudentrequest1.id,this.editStudentrequest1).subscribe({
       next:(response)=>{
@@ -102,11 +112,22 @@ export class EditstudentComponent implements OnInit {
     this.getCities(id);
   }
     getCities(id:number){
-      
       if (id) {
         this.studentservice.getCitiesByState(id).subscribe((cities: any) => {
           this.cities = cities;
         });
       } 
     }
-    }
+    bool1:boolean=false;
+  Checkemail(email:string){
+    this.studentservice.checkemail(email).subscribe((bool:boolean)=>{
+      this.bool1 = bool;
+    });
+  }
+  bool2:boolean=false;
+  Checkmobile(mobile:string){
+    this.studentservice.checkmobile(mobile).subscribe((bool:boolean)=>{
+      this.bool2 = bool;
+    });
+  }
+}

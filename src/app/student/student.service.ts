@@ -1,11 +1,11 @@
 import { Injectable,ElementRef, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
 import { student } from '../models/student.model';
 import { student1 } from '../models/student1.model';
 import { state } from '../models/state.model';
 import { city } from '../models/city.model';
+import { environment } from '../../environments/environment';
  
 @Injectable({
   providedIn: 'root'
@@ -23,7 +23,7 @@ export class StudentService {
     const id = `${year}${month}${day}`;
     return id;
   }
-  baseApiUrl:string='https://localhost:7069';
+  baseApiUrl:string = 'https://localhost:7069';
   constructor(private http: HttpClient) { }
 
   
@@ -58,4 +58,10 @@ getStates(): Observable<state> {
 getCitiesByState(stateId: number): Observable<city> {
   return this.http.get<city>(this.baseApiUrl+'/api/Student/state/'+stateId);
 }
+checkemail(email:string):Observable<boolean>{
+ return this.http.get<boolean>(this.baseApiUrl+'/api/Student/checke/'+email);
+}
+checkmobile(mobile:string):Observable<boolean>{
+  return this.http.get<boolean>(this.baseApiUrl+'/api/Student/checkm/'+mobile);
+ }
 }

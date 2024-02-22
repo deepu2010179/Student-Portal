@@ -78,7 +78,6 @@ export class AddstudentComponent implements OnInit{
   cities: Array<city>=[];
   selectedRecords: Array<student> = [];
  
-
   ngOnInit(): void {
     this.studentService.getStates().subscribe((states: any) => {
       this.states = states;
@@ -96,8 +95,19 @@ export class AddstudentComponent implements OnInit{
     this.studentService.addStudent(this.addStudentrequest1).subscribe({
       next:(student)=>{
         this.router.navigate(['students']);
-        window.alert("Student Added")
       }
+    });
+  }
+  bool1:boolean=false;
+  Checkemail(email:string){
+    this.studentService.checkemail(email).subscribe((bool:boolean)=>{
+      this.bool1 = bool;
+    });
+  }
+  bool2:boolean=false;
+  Checkmobile(mobile:string){
+    this.studentService.checkmobile(mobile).subscribe((bool:boolean)=>{
+      this.bool2 = bool;
     });
   }
 }

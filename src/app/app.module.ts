@@ -10,13 +10,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { AddstudentComponent } from './addstudent/addstudent.component';
 import { EditstudentComponent } from './editstudent/editstudent.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     StudentComponent,
     AddstudentComponent,
-    EditstudentComponent
+    EditstudentComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
