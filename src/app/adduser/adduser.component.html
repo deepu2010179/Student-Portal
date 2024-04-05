@@ -1,0 +1,76 @@
+<div class="container-fluid main">
+    <div class="main1">
+        <div class="row">
+            <div class="col-10"><h1 class="head" id="h1">Add User</h1></div>
+            <div class="col-2"><h1 id="h1">{{ getLoggedInUserName() }}</h1></div>
+        </div>
+        <hr>
+            <form class="" #form="ngForm" (ngSubmit)="addUser()">
+                <div class="row">
+                    <div class="col-6">
+                        <div [formGroup]="formGrp" novalidate>
+                            <label class="loginlabel" for="username">Username:</label>
+                            <input #username class="loginput" type="text" id="username" name="username" [(ngModel)]="addUserrequest.username" formControlName="Name1"
+                            ng-model-options="{standalone:true}"/>
+                            <div *ngIf="mobno['Name1'].touched && mobno['Name1'].invalid" class="show">
+                                <div *ngIf="mobno['Name1'].errors?.['required'] &&mobno['Name1'].dirty">*Please enter Username</div>
+                                <div *ngIf="mobno['Name1'].errors?.['pattern'] &&mobno['Name1'].dirty">*Please enter Valid Username</div>
+                            </div>
+                        </div>
+                        <div [formGroup]="formGrp" novalidate>
+                            <label class="loginlabel" for="password">Password:</label>
+                            <input #password class="loginput" type="password" id="password" name="password" [(ngModel)]="addUserrequest.hashed_password" formControlName="pass" ng-model-options="{standalone:true}">
+                            <div *ngIf="mobno['pass'].touched && mobno['pass'].invalid" class="show">
+                                <div *ngIf="mobno['pass'].errors?.['required'] &&mobno['pass'].dirty">*Please enter Password</div>
+                                <div *ngIf="mobno['pass'].errors?.['pattern'] &&mobno['pass'].dirty">*Please enter Valid Password</div>
+                            </div>
+                        </div>
+                        <div>
+                        <label for="ques">Security Question:</label>
+                        <select id="ques" class="" name="ques" #ques>
+                            <option [selected]="true" [value]="1">what is your first school name?</option>
+                            <option [value]="2">What is your favorite food?</option>
+                        </select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div [formGroup]="formGrp" novalidate>
+                            <label class="loginlabel" for="email">Email:</label>
+                            <input #email class="loginput" type="text" id="email" name="email" [(ngModel)]="addUserrequest.email" formControlName="eMail"
+                            ng-model-options="{standalone:true}"/>
+                            <div *ngIf="mobno['eMail'].touched && mobno['eMail'].invalid" class="show">
+                                <div *ngIf="mobno['eMail'].errors?.['required'] &&mobno['eMail'].dirty">*Please enter Email Id</div>
+                                <div *ngIf="mobno['eMail'].errors?.['pattern'] &&mobno['eMail'].dirty">*Please enter valid Email Id</div>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="loginlabel" for="cpassword">Confirm Password:</label>
+                            <input #cpassword class="loginput" type="password" id="cpassword" name="cpassword" ng-model-options="{standalone:true}" required>
+                        </div>
+                        <div>
+                            <label class="loginlabel" for="answer">Answer:</label>
+                            <input #answer class="loginput" type="text" id="answer" name="answer" ng-model-options="{standalone:true}" required>
+                        </div>
+                    </div>
+                </div>  
+                <h1 class="head" id="h1">Role</h1>
+                <hr>
+                <div class="form-check form-check-inline roles">
+                    <input #student class="form-check-input" type="checkbox" [value]="1" id="student" (change)="handleChange($event)">
+                    <label class="form-check-label" for="student">
+                      Student
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input #admin class="form-check-input" type="checkbox" [value]="2" id="admin" (change)="handleChange($event)">
+                    <label class="form-check-label" for="admin">
+                      Admin
+                    </label>
+                </div>
+                <br>
+                <button type="submit" class="custom button1 ad" [disabled]="username.value==''||email.value==''||password.value==''||password.value!=cpassword.value">Add</button>
+                <button type="button" class="custom button1 ad del" (click)="btnClick1();">Back</button>
+            </form>
+    </div>
+    <app-footer></app-footer>
+</div>

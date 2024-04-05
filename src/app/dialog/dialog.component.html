@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>
+    {{title}}
+</h1>
+<div mat-dialog-content>
+  <p>{{message}}</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button class="custom button1 ad" (click)="dismiss()">No</button>
+  <button mat-raised-button class="custom button2 ad del" (click)="confirm()">Yes</button>
+</div>

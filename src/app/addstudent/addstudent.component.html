@@ -1,14 +1,19 @@
 
-<div class="container my-5">
-  <h1 class="mb-3 head">Add Student</h1>
+<div class="container-fluid main">
+  <div class="main1">
+    <div class="row">
+      <div class="col-10"><h1 class="head" id="h1">Add Student</h1></div>
+      <div class="col-2"><h1 id="h1">{{ getLoggedInUserName() }}</h1></div>
+    </div>
+    <hr>
   <form #form="ngForm" (ngSubmit)="addStudent()">
    <div class="row">
      <div class="col-6">
-        <div class="mb-3" [formGroup]="formGrp" novalidate>
-          <label for="name" class="form-label">Name:</label>
+        <div class="" [formGroup]="formGrp" novalidate>
+          <label for="name" class="">Name:</label>
           <input
             type="text"
-            class="form-control"
+            class=""
             id="name"
             #st
             [(ngModel)]="addStudentrequest1.name"
@@ -21,11 +26,11 @@
             <div *ngIf="mobno['Name1'].errors?.['pattern'] &&mobno['Name1'].dirty">*Please enter Valid Name</div>
           </div>
         </div>
-        <div class="mb-3 l2" [formGroup]="formGrp" novalidate>
-          <label for="mobile" class="form-label">Mobile:</label>
+        <div class="" [formGroup]="formGrp" novalidate>
+          <label for="mobile" class="">Mobile:</label>
           <input
             type="text"
-            class="form-control"
+            class=""
             id="mobile"
             [(ngModel)]="addStudentrequest1.mobile"
             name="mobile"
@@ -39,11 +44,11 @@
             <div *ngIf="mobno['mobileNumber'].errors?.['pattern'] &&mobno['mobileNumber'].dirty">*Please enter valid Mobile Number</div>
           </div>
         </div>
-        <div class="mb-3 l3">
-          <label for="address2" class="form-label">Address2:</label>
+        <div class="">
+          <label for="address2" class="">Address2:</label>
           <input
             type="text"
-            class="form-control"
+            class=""
             id="address2"
             [(ngModel)]="addStudentrequest1.address2"
             name="address2"
@@ -51,21 +56,22 @@
         </div>
         
 
-        <div class="mb-3 l4">
-          <label for="city" class="form-label">City:</label>
+        <div class="">
+          <label for="city">City:</label>
           <select
             id="city"
-            class="custom-select form-control"
+            class=""
             [(ngModel)]="addStudentrequest1.cityId"
+            [(ngModel)]="selectedc"
             name="city"
           >
-            <option selected>Select City</option>
+            <option selected>--Select City--</option>
             <option *ngFor="let city of cities" [value]="city.id">
               {{ city.name }}
             </option>
           </select>
         </div>
-        <div class="mb-3">
+        <div class="">
           <div class="form-check form-check-inline">
             <input
               type="radio"
@@ -75,7 +81,7 @@
               name="gender"
               [(ngModel)]="addStudentrequest1.gender"
             />
-            <label for="gender" class="form-check-label ml">Male</label>
+            <label for="gender" class="form-check-label">Male</label>
           </div>
           <div class="form-check form-check-inline">
             <input
@@ -89,15 +95,15 @@
             <label for="gender" class="form-check-label">Female</label>
           </div>
         </div>
-        <button type="submit" class="btn btn-outline-success custom" [disabled]="!formGrp.valid" (click)="doSubmit(); doSubmit1(); doSubmit2();">Save</button>
-
+        <button type="submit" class="custom button1 ad" [disabled]="!formGrp.valid">Save</button>
+        <button type="button" class="custom button1 ad del" (click)="btnClick1();">Back</button>
     </div>
     <div class="col-6">
-      <div class="mb-3 l1" [formGroup]="formGrp" novalidate>
-        <label for="email" class="form-label">Email:</label>
+      <div class="" [formGroup]="formGrp" novalidate>
+        <label for="email" class="">Email:</label>
         <input
           type="text"
-          class="form-control"
+          class=""
           id="email"
           [(ngModel)]="addStudentrequest1.email"
           name="email"
@@ -111,36 +117,37 @@
           <div *ngIf="mobno['eMail'].errors?.['pattern'] &&mobno['eMail'].dirty">*Please enter valid Email Id</div>
         </div>
       </div>
-      <div class="mb-3 l2">
-        <label for="address1" class="form-label">Address1:</label>
+      <div class="">
+        <label for="address1" class="">Address1:</label>
         <input
           type="text"
-          class="form-control"
+          class=""
           id="address1"
           [(ngModel)]="addStudentrequest1.address1"
           name="address1"
         />
       </div>
-      <div class="mb-3 l3" *ngIf="states.length > 0">
-        <label for="state" class="form-label">State:</label>
+      <div class="" *ngIf="states.length > 0">
+        <label for="state" class="">State:</label>
         <select
           id="state"
-          class="custom-select form-control"
+          class=""
           [(ngModel)]="addStudentrequest1.stateId"
+          [(ngModel)]="selecteds"
           name="state"
           #state
          (change)="onStateChange()"
          >
-         <option selected>Select State</option>
+         <option [selected]="true">--Select State--</option>
           <option *ngFor="let state of states" [value]="state.id">
             {{ state.name }}
           </option>
         </select>
       </div>
-      <div class="mb-3 l5">
-        <label for="maritalStatus" class="form-label">Marital Status:</label>
-        <select id="maritalStatus" class="custom-select form-control" [(ngModel)]="addStudentrequest1.maritalStatus" name="maritalStatus">
-        <option selected>--Select--</option>
+      <div class="">
+        <label for="maritalStatus" class="">Marital Status:</label>
+        <select id="maritalStatus" class="" [(ngModel)]="addStudentrequest1.maritalStatus" name="maritalStatus" [(ngModel)]="selectedms">
+          <option [selected]="true">--Select Marital Status--</option>
         <option value="0">Single</option>
         <option value="1">Married</option>
         <option value="2">Separated</option>
@@ -149,4 +156,6 @@
     </div>
   </div>
   </form>
+  </div>
+  <app-footer></app-footer>
 </div>

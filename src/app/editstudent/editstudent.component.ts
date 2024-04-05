@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { state } from '../models/state.model';
 import { city } from '../models/city.model';
 import { AbstractControl,FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent,ConfirmDialogModel } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-editstudent',
@@ -18,24 +20,16 @@ export class EditstudentComponent implements OnInit {
   formGrp:FormGroup; 
   mobile:string;
   email:string;
-  constructor(private fb:FormBuilder,private route:ActivatedRoute,private studentservice:StudentService,private router:Router){
+  constructor(private fb:FormBuilder,private route:ActivatedRoute,private studentservice:StudentService,private router:Router,private mat:MatDialog,private dia:DialogComponent){
     this.mobile='';
     this.email='';
     this.formGrp=fb.group({
       mobileNumber:['',[Validators.required,Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
-      eMail:['',[Validators.required,Validators.pattern("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}")]]
+      eMail:['',[Validators.required,Validators.pattern("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}")]],
     })
   }
   get mobno(){
     return this.formGrp.controls;
-  }
-  doSubmit(){
-    console.log(this.formGrp.value);
-    console.log(this.mobile);
-  }
-  doSubmit1(){
-    console.log(this.formGrp.value);
-    console.log(this.email);
   }
 
   editStudentrequest:student={
@@ -90,16 +84,29 @@ export class EditstudentComponent implements OnInit {
       this.states = states;
     });
   }
-  txt:boolean=false;
-conf(){
-  if (confirm("Are you sure ?")) {
-    this.txt = true;
-  } else {
-    this.txt = false;
+  confirmDialog(): void {
+    const message = `Are you sure you want to Edit ?`;
+    const dialogData = new ConfirmDialogModel("Confirm Action", message);
+    const dialogRef = this.mat.open(DialogComponent, {
+      maxWidth: "400px",
+      data: dialogData
+    });
+  
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      if(dialogResult)
+      this.updatestudent();
+    });
   }
-  if(this.txt)
-  this.updatestudent();
-}
+//   txt:boolean=false;
+// conf(){
+//   if (confirm("Are you sure ?")) {
+//     this.txt = true;
+//   } else {
+//     this.txt = false;
+//   }
+//   if(this.txt)
+//   this.updatestudent();
+// }
   updatestudent(){
     this.studentservice.updateStudent(this.editStudentrequest1.id,this.editStudentrequest1).subscribe({
       next:(response)=>{
@@ -107,6 +114,9 @@ conf(){
       }
     });
   }
+  selecteds:string='--Select State--';
+  selectedc:string='--Select City--';
+  selectedms:string='--Select Marital Status--';
   onStateChange() {
     let id = this.selectedState?.nativeElement.value;
     this.getCities(id);
@@ -129,5 +139,12 @@ conf(){
     this.studentservice.checkmobile(mobile).subscribe((bool:boolean)=>{
       this.bool2 = bool;
     });
+  }
+  btnClick1(){
+    this.router.navigateByUrl('students');
+  };
+  getLoggedInUserName(): string {
+    const user = this.studentservice.getLoggedInUser();
+    return user;
   }
 }

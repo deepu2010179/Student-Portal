@@ -1,26 +1,84 @@
-<div class="container-fluid">
-    <h1 class="d-flex justify-content-center head">Student Record</h1>
-    <div class="table-responsive">
-      <table class="table table-success table-bordered table-striped mt-3" *ngIf="students&&students.length>0">
+<div class="container-fluid main">
+    <div class="main1">
+      <div class="row">
+        <div class="col-10"><h1 id="h1">Student Management</h1></div>
+        <div class="col-2"><h1 id="h1">{{ getLoggedInUserName() }}</h1></div>
+      </div>
+      <hr>
+      <!-- <div class="row">
+        <div class="col-12">
+          <label for="management">Select Management:</label>
+          <select id="management" class="" name="management" (change)="btnClick1();" #management [(ngModel)]="selectedm">
+            <option [selected]="true">--Select Management--</option>
+            <option value="user">User Management</option>
+            <option value="role">Role Management</option>
+          </select>
+          <button type="button" class="custom button1 ad" (click)="btnClick1();" title="User Management"><i class="fa fa-user"></i></button> 
+          <button type="button" class="custom button1 ad del" title="Role Management"><i class="fa fa-gears"></i></button>
+        </div>
+      </div> -->
+     <div class="row">
+      <div class="col-2">
+        <div class="rap">
+          <button type="button" class="custom button1 ad" (click)="btnClick();" title="Add"><i class="fa fa-plus"></i></button>  
+          <button type="button" class="custom button2 ad del" (click)="confirmDialog();" [disabled]="selectedRecords.length === 0" title="Delete"><i class="fa fa-trash "></i></button>
+        </div>
+      </div>
+      <div class="col-2">
+        <label for="management">Select Management:</label>
+          <select id="management" class="" name="management" (change)="btnClick1();" #management [(ngModel)]="selectedm">
+            <option [selected]="true">--Select Management--</option>
+            <option value="user">User Management</option>
+            <option value="role">Role Management</option>
+          </select>
+      </div>
+      <div class="col-6">
+        <div>
+          <label for="">Search:</label>
+          <input type="text" placeholder="Search By Name" name="name" [(ngModel)]="name" (ngModelChange)="search()">
+        </div>
+        <div>
+        </div>
+      </div>
+      <div class="col-1">
+        <div>
+          <label for="pagesize">Page Size:</label>
+          <select id="pagesize" class="" name="pagesize" (change)="onPageSizeChange()" #pagesize>
+            <option [selected]="true" value="5">5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-1 rap1">
+        <button id="h2" type="button" class="custom button1 ad" (click)="exportToExcel()" title="Export to Excel"><i class="fa fa-file"></i></button>
+      </div>
+     </div>
+     <div class="table-responsive">
+      <table id="students" *ngIf="students&&students.length>0">
         <thead>
           <tr>
             <th>Select</th>
-            <th>Code</th>
-            <th>Name</th>
+            <th>#</th>
+            <th (click)="toggleSort('code')">Code <i *ngIf="clicked" class="fa fa-sort-{{sortAsc===true? 'asc':'desc'}}"></i></th>
+            <th (click)="toggleSort('name')">Name <i *ngIf="clicked" class="fa fa-sort-{{sortAsc===true? 'asc':'desc'}}"></i></th>
             <th>Email</th>
-            <th>Mobile No.</th>
+            <th>Mobile No</th>
             <th>Address1</th>
             <th>Address2</th>
-            <th>State</th>
-            <th>City</th>
-            <th>Gender</th>
-            <th>Marital Status</th>
+            <th (click)="toggleSort('stateName')">State <i *ngIf="clicked" class="fa fa-sort-{{sortAsc===true? 'asc':'desc'}}"></i></th>
+            <th (click)="toggleSort('cityName')">City <i *ngIf="clicked" class="fa fa-sort-{{sortAsc===true? 'asc':'desc'}}"></i></th>
+            <th class="ms" (click)="toggleSort('genderName')">Gender &nbsp;<i *ngIf="clicked" class="fa fa-sort-{{sortAsc===true? 'asc':'desc'}}"></i></th>
+            <th class="ms" (click)="toggleSort('maritalStatusName')">Marital &nbsp;Status <i *ngIf="clicked" class="fa fa-sort-{{sortAsc===true? 'asc':'desc'}}"></i></th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor = "let student of students">
-            <td><input type="checkbox" [checked]="isSelected(student)" (change)="checkSelection(student)"></td>
+          <tr *ngFor = "let student of students | SortByName:'name'; let i = index">
+            <td><span><input type="checkbox" [checked]="isSelected(student)" (change)="checkSelection(student)"></span></td>
+            <td><span>{{getsn(i)}}</span></td>
             <td><span>{{student.code}}</span></td>
             <td><span>{{student.name}}</span></td>
             <td><span>{{student.email}}</span></td>
@@ -31,18 +89,20 @@
             <td><span>{{student.cityName}}</span></td>
             <td><span>{{student.genderName}}</span></td>
             <td><span>{{student.maritalStatusName}}</span></td>
-            <td><p><button type="button" class="btn btn-outline-primary btn-sm custom" [routerLink]="['/students','edit',student.id]">Edit</button></p>
+            <td><p><button type="button" class="custom button1" [routerLink]="['/students','edit',student.id]" title="Edit"><i class="fa fa-pencil"></i></button></p>
             </td>
           </tr>
         </tbody>
-        <br>
-        <button type="button" class="btn btn-outline-danger custom" (click)="conf()" [disabled]="selectedRecords.length === 0">
-          Delete
-        </button>
-      </table>
+      </table>    
     </div>
-    <div *ngIf="showmessage" class="successmessage">Selected Records are deleted successfully!!</div>
+    <div class="page">
+      <button class="custom button1" (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1" title="Previous"><i class="fa fa-arrow-left"></i></button>
+      <span class="pageno">Page {{ currentPage }}/{{totalpages}}</span>
+      <button class="custom button1" (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalpages"  title="Next"><i class="fa fa-arrow-right"></i></button>
+    </div>
     <h5 *ngIf="!students||students.length<=0" class="alert alert-danger">Not Found!!</h5>
+    </div>
+    <app-footer></app-footer>
   </div>
   
 

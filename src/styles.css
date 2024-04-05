@@ -1,26 +1,108 @@
 *{
     margin: 0;
     padding:0;
-    font-family: 'Asap',sans-serif;
     box-sizing: border-box;
 }
-
+html, body { 
+    height: 100%; 
+    min-height: 100%;
+}
+@font-face {
+    font-family: Roboto;
+    src: url(assets/fonts/Roboto-Regular.ttf) format('truetype');
+}
 body{
-    background-image: url(./assets/images/background.jpg);
-    font-family: Arial, Helvetica, sans-serif;
+    /* background-image: url(./assets/images/background.jpg); */
+    /* background: rgb(213,210,210);
+    background: radial-gradient(circle, rgba(213,210,210,0.5158438375350141) 0%, rgba(184,183,183,1) 100%); */
+    background: rgb(255,255,255);
+    background: radial-gradient(circle, rgba(255,255,255,0.5158438375350141) 0%, rgba(230,230,230,1) 100%);
+    font-family: Roboto;
     margin: 0;
     height: 100%;
     font-size: 1rem;
     line-height: 1.6;
 }
+.pageno{
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#favi{
+    border-radius: 50%;
+}
+.ms{
+    white-space: nowrap;
+}
+.rap{
+    display: flex;
+    margin-top: 10px;
+}
+.rap1{
+    margin-top: 20px;
+}
+label{
+    font-size: 15px;
+}
 .custom {
-    width: 78px !important;
+    width: 60px !important;
+    background-color: #04AA6D;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    padding: 5px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    transition-duration: 0.4s;
+}
+.button1 {
+    background-color: white; 
+    color: black; 
+    border: 2px solid #bebeb8;
+}
+.button1:hover {
+    background-color: #cfcfcd;
+    color: white;
+}
+.button2 {
+    background-color: white; 
+    color: black; 
+    border: 2px solid #bebeb8;
+    margin-bottom: 10px;
+}
+.button2:hover:enabled {
+    background-color: #f44336;
+    color: white;
+}
+.button2:disabled{
+    background-color: #cfcfcd;
+    color: #666666;
+    border-color: #bebeb8;
+}
+.button1:hover:enabled {
+    background-color: #cfcfcd;
+    color: black;
+}
+.button1:disabled{
+    background-color: #cfcfcd;
+    color: #666666;
+    border-color: #bebeb8;
+}
+.ad{
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+.del{
+    margin-left: 10px;
 }
 .show{
     color: red;
 }
 .head{
-    color:green;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 .successmessage{
     margin-top: 10px;
@@ -33,14 +115,29 @@ ul{
     list-style: none;
 }
 header{
-    background-color: #82c0f7;
-    padding: 0.5rem 0;
+    background-color: rgb(179, 179, 179);
+    padding: 0.1rem 0;
+    position: sticky ;
 }
 .footer{
-    background-color: #82c0f7;
+    background-color: rgb(179, 179, 179);
+    position: absolute;
+    width: 100%;
+    height: 6.5rem;
+    left: 0;
+    bottom: 0;
+}.page{
+    margin-bottom: 20px;
+    text-align: center;
+}
+.logo{
+    float: left;
+    /* border: 5px solid #E2BFB3; */
+    border-radius: 8px;
+    /* padding-left: 1.5px; */
 }
 nav{
-    max-width: 1100px;
+    max-width: 1300px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
@@ -54,22 +151,27 @@ nav{
 }
 .menu a{
     text-decoration: none;
-    color: #fff;
+    color: black;
     display: block;
     padding: 5px 1.5rem;
     transition: background-color .22s ease ,.22s ease;
 }
 
 .menu a:hover{
-    background-color: #8f7be9;
+    background-color: #ceccc5;
     color: #fff;
 }
 .submenu{
     position: absolute;
-    background-color: #7e9ebe;
-    width: 140px;
-    left: 0;
+    background-color: #d3d2c7;
+    width: 200px;
+    left: -100px;
     display: none;
+    float: right;
+}
+.roles{
+    margin-top: 2%;
+    margin-bottom: 1%;
 }
 .menu li:hover >.submenu{
     display: block;
@@ -86,5 +188,138 @@ nav{
         transform: none;
     }
 }
+#students{
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+#students td, #students th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+#students tr:nth-child(even){
+    background-color: #e4e4e4;
+}
+.code{
+    background-color: #c6caca;
+}
+#students tr:nth-child(odd){
+    background-color: #f3f3f3;
+}
+#students tr:hover {
+    background-color: #e9e9e9;
+}
+#students th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: rgb(218, 218, 218);
+    color: black;
+}
+#h1{
+    color: rgb(100, 100, 100);
+    text-align: left;
+    margin-top: 10px;
+    margin-bottom: 2px;
+}
+#h2{
+    margin-top: 10px;
+    margin-bottom: 2px;
+    float: right;
+}
+.main{
+    position: relative;
+    min-height: 90.5vh;
+}
+.main1{
+    padding-bottom: 6.5rem;
+}
+.footer-text{
+    padding-top: 45px;
+    text-align: center;
+    color: black;
+}
+.d{
+    background-color: white;
+}
+/* #username{
+    padding: 0;
+    margin: 0;
+} */
+input[type=text], select,input[type=password]{
+    width: 100%;
+    padding: 6px 12px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.username{
+    margin-top: 10vh;
+}
+input[type=checkbox]{
+    width: 20px;
+    height: 20px;
+}
+th {
+    cursor: pointer;
+}
 
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin-top: -10%;
+}
+
+.loginform{
+  width: 300px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.h2login{
+    text-align: center;
+}
+.loginlabel{
+  display: block;
+  margin-bottom: 5px;
+}
+.loginput{
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    height: 15%;
+}
+.loginbuttton{
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+.loginbuttton:hover{
+    background-color: #45a049;
+}
+.loginp{
+    margin-bottom: -10%;
+}
+.landheader{
+    text-align: center;
+    color: grey;
+    margin-top: 2%;
+    margin-bottom: -5%;
+}
+.lobut{
+    margin-left: 37%;
+}
+.lobut1{
+    margin-left: 15%;
+}
+.pointer{
+    cursor: pointer;
+}
 

@@ -31,18 +31,6 @@ export class AddstudentComponent implements OnInit{
   get mobno(){
     return this.formGrp.controls;
   }
-  doSubmit(){
-    console.log(this.formGrp.value);
-    console.log(this.mobile);
-  }
-  doSubmit1(){
-    console.log(this.formGrp.value);
-    console.log(this.email);
-  }
-  doSubmit2(){
-    console.log(this.formGrp.value);
-    console.log(this.name);
-  }
   maritals = ['Single','Married','Separated'];
   addStudentrequest:student={
     id: 0,
@@ -98,6 +86,9 @@ export class AddstudentComponent implements OnInit{
       }
     });
   }
+  selecteds:string='--Select State--';
+  selectedc:string='--Select City--';
+  selectedms:string='--Select Marital Status--';
   bool1:boolean=false;
   Checkemail(email:string){
     this.studentService.checkemail(email).subscribe((bool:boolean)=>{
@@ -109,5 +100,12 @@ export class AddstudentComponent implements OnInit{
     this.studentService.checkmobile(mobile).subscribe((bool:boolean)=>{
       this.bool2 = bool;
     });
+  }
+  btnClick1(){
+    this.router.navigateByUrl('students');
+  };
+  getLoggedInUserName(): string {
+    const user = this.studentService.getLoggedInUser();
+    return user;
   }
 }
