@@ -5,6 +5,9 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StudentComponent } from '../student/student.component';
 import { CredentialResponse,PromptMomentNotification } from 'google-one-tap';
+import { MsalService } from '@azure/msal-angular';
+import { filter, takeUntil } from 'rxjs';
+import { InteractionStatus } from '@azure/msal-browser';
 
 @Component({
   selector: 'app-login',
@@ -17,14 +20,16 @@ export class LoginComponent implements OnInit {
   data:any;
   res:any;
   nav:boolean=false;
+  broadcastService: any;
   constructor(private formBuilder:FormBuilder, private authService:StudentService,private router:Router
-    ,private stu:StudentComponent,private _ngZone:NgZone){}
+    ,private stu:StudentComponent,private _ngZone:NgZone,private auth:MsalService){}
   auths:auth={
     username:'',
     password:''
   };
 
   ngOnInit(): void {
+    this.setLoginDisplay();
     // @ts-ignore
     window.onGoogleLibraryLoad =()=>{
       // @ts-ignore
@@ -47,13 +52,33 @@ export class LoginComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
     });
+    this.auth.instance.initialize();
+    this.auth.instance.handleRedirectPromise().then((res) => {
+      if (res != null && res.account != null) {
+        this.auth.instance.setActiveAccount(res.account);
+      }
+    });
+    
+  }
+  private _destroying$(_destroying$: any): any {
+    throw new Error('Method not implemented.');
   }
   async handleCredentialResponse(response:CredentialResponse){
     await this.authService.LoginWithGoogle(response.credential).subscribe(
       (response:any)=>{
         this.authService.storeToken(response.token);
+        this.data=response;
+        this.res=this.data.role;
+        this,this.authService.logedname=response.userName;
         this._ngZone.run(()=>{
+          if(this.res.result.length>1)
           this.router.navigate(['students'])
+          else{
+            if(this.res.result[0]=="admin")
+              this.router.navigate(['students']);
+            else
+            this.router.navigate(['students/studentpage']);
+          }
         })
       },
       (error:any)=>{
@@ -61,15 +86,9 @@ export class LoginComponent implements OnInit {
       }
     );
   }
-  // login1(): void {
-  //   if (this.authService.authenticate(this.auths.username, this.auths.password)) {
-  //     this.router.navigate(['students']);
-  //   } else {
-  //     console.log('Invalid credentials');
-  //   }
-  // }
+
   get f() { return this.loginForm.controls; }
- 
+  loginDisplay = false;
   login(): void {
     if (this.loginForm.invalid) {
       return;
@@ -118,4 +137,39 @@ export class LoginComponent implements OnInit {
       passwordInput.type = 'password';
     }
   }
+ async loginwithmicro() {
+    this.auth.loginPopup()
+      .subscribe({
+        next: (result) => {
+          this.authService.LoginWithMicrosoft(result.accessToken).subscribe(
+            (response)=>{
+              this.data=response;
+              this.res=this.data.role;
+              localStorage.setItem('token', response.token);
+              this,this.authService.logedname=response.userName;
+              if(this.res.result.length>1)
+                this.router.navigate(['students']);
+                else{
+                  if(this.res.result[0]=="admin")
+                    this.router.navigate(['students']);
+                  else
+                  this.router.navigate(['students/studentpage']);
+                }
+            }
+          );
+          
+          console.log(result);
+        },
+        error: (error) => console.log(error)
+      });
+  }
+  setLoginDisplay() {
+    this.loginDisplay = this.auth.instance.getAllAccounts().length > 0;
+  }
+  logout() { 
+    this.auth.logoutRedirect({
+      postLogoutRedirectUri: 'http://localhost:4200/'
+    });
+  }
+  
 }

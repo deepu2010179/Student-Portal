@@ -113,11 +113,6 @@ deleteallrecords(){
       }
     });
   }
-  // opendialog(){
-  //   this.mat.open(DialogComponent,{
-  //     width:'350px',
-  //   })
-  // }
   currentPage:number = 1;
   pageSize:number = 5;
 
@@ -171,22 +166,19 @@ toggleSort(column: string) {
     return a[column].localeCompare(b[column]) * order;
   });
 }
-// sortByName(){
-//   this.students.reverse();
-// }
-// sortByState() {
-//   this.students.sort((a, b) => a.stateName.localeCompare(b.stateName));
-// }
-// sortByState(){
-//   this.students.reverse();
-// }
 exportToExcel(): void {
   this.studentService.exportToExcel(this.studentss, 'Students', 'Sheet1');
 }
 btnClick1(){
   let id = this.selectedman?.nativeElement.value;
   if(id=='user')
-  this.router.navigateByUrl('students/user');
+    this.router.navigateByUrl('students/user');
+  if(id=='role')
+    this.router.navigateByUrl('students/role');
+  if(id=='course')
+    this.router.navigateByUrl('students/course');
+  if(id=='teacher')
+    this.router.navigateByUrl('students/teacher');
 };
 getLoggedInUserName(): string {
   const user = this.studentService.getLoggedInUser();

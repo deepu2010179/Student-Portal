@@ -1,0 +1,47 @@
+<div class="container-fluid main">
+    <div class="main1">
+      <div class="row">
+        <div class="col-10">
+          <h1 class="head" id="h1">
+            Edit Course ({{ this.editCourserequest.name }})
+          </h1>
+        </div>
+        <div class="col-2">
+          <h1 id="h1">{{ getLoggedInUserName() }}</h1>
+        </div>
+      </div>
+      <hr />
+      <form #form="ngForm" (ngSubmit)="confirmDialog()">
+        <div class="row">
+          <div class="col-6">
+            <div class="">
+              <label for="coursename" class="">Course Name:</label>
+              <input
+                type="text"
+                class="course"
+                id="corse"
+                [(ngModel)]="editCourserequest.name"
+                name="course"
+              />
+            </div>
+          </div>
+        </div>
+        <button
+            type="submit"
+            class="custom button1 ad"
+          >
+            Save
+          </button>
+          <button
+            type="button"
+            class="custom button1 ad del"
+            (click)="btnClick1()"
+          >
+            Back
+          </button>
+      </form>
+      <app-class></app-class>
+    </div>
+    <app-footer></app-footer>
+  </div>
+  

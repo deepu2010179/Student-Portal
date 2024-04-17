@@ -1,0 +1,38 @@
+<div class="container-fluid main">
+    <div class="main1">
+      <div class="row">
+        <div class="col-10"><h1 id="h1">Role Management</h1></div>
+        <div class="col-2"><h1 id="h1">{{ getLoggedInUserName() }}</h1></div>
+      </div>
+        <hr>
+        <div class="row">
+          <div class="col-2">
+            <div class="rap">
+              <button type="button" class="custom button1 ad" (click)="btnClick();" title="Add Role"><i class="fa fa-plus"></i></button>  
+              <button type="button" class="custom button2 ad del" (click)="confirmDialog();" [disabled]="selectedRecords.length === 0" title="Delete Role"><i class="fa fa-trash "></i></button>
+            </div>
+          </div>
+        <div class="table-responsive">
+            <table id="students" *ngIf="roles&&roles.length>0">
+              <thead>
+                <tr>
+                  <th style="padding-left: 1%;">Select</th>
+                  <th>Id</th>
+                  <th>Role name</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor = "let role of roles">
+                  <td><span><input type="checkbox" [checked]="isSelected(role)" (change)="checkSelection(role)"></span></td>
+                  <td><span>{{role.id}}</span></td>
+                  <td><span>{{role.role_name}}</span></td>
+                </tr>
+              </tbody>
+            </table>    
+          </div>
+          <div class="page">
+            <button type="button" class="custom button1 ad del" (click)="btnClick1();">Back</button>
+          </div>
+    </div>
+    <app-footer></app-footer>
+</div>

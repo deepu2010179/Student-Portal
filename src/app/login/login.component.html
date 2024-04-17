@@ -16,5 +16,7 @@
       <button class="custom button1 lobut" (click)="login()">Login</button>
       <p>-----------------------------or-----------------------------</p>
     <div class="lobut1" id="google"></div>
+    <button class="micro" (click)=" loginwithmicro()"><i class="fa-brands fa-microsoft"></i> Sign in With Microsoft</button>
+    <button mat-raised-button *ngIf="loginDisplay" (click)="logout()">Logout</button>
     </form>
 </div>

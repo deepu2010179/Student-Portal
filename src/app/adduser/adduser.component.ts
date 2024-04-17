@@ -5,6 +5,7 @@ import { AbstractControl,FormBuilder, FormGroup, Validators } from '@angular/for
 import { user } from '../models/user.model';
 import { userrole } from '../models/userrole.model';
 import * as bcrypt from 'bcryptjs';
+import { role } from '../models/role.model';
 
 @Component({
   selector: 'app-adduser',
@@ -29,7 +30,11 @@ export class AdduserComponent implements OnInit{
   @ViewChild('admin') admin: ElementRef | undefined;
   @ViewChild('student') student: ElementRef | undefined;
   ngOnInit(): void {
-      
+    this.studentService.getAllRoles().subscribe({
+      next:(roles)=>{
+        this.roles=roles;
+      }
+    })
   }
   
   get mobno(){
@@ -83,4 +88,6 @@ export class AdduserComponent implements OnInit{
     const user = this.studentService.getLoggedInUser();
     return user;
   }
+  roles:role[]=[];
+
 }

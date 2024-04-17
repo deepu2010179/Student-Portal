@@ -1,0 +1,28 @@
+<div class="container-fluid main">
+    <div class="main1">
+        <div class="row">
+            <div class="col-10"><h1 class="head" id="h1">Add Course</h1></div>
+            <div class="col-2"><h1 id="h1">{{ getLoggedInUserName() }}</h1></div>
+        </div>
+        <hr>
+            <form class="" #form="ngForm" (ngSubmit)="addCourse()">
+                <div class="row">
+                    <div class="col-6">
+                        <div [formGroup]="formGrp" novalidate>
+                            <label class="loginlabel" for="coursename">Course Name:</label>
+                            <input #coursename class="loginput" type="text" id="coursename" name="coursename" [(ngModel)]="addCourserequest.name" formControlName="Name1"
+                            ng-model-options="{standalone:true}"/>
+                            <div *ngIf="mobno['Name1'].touched && mobno['Name1'].invalid" class="show">
+                                <div *ngIf="mobno['Name1'].errors?.['required'] &&mobno['Name1'].dirty">*Please enter Course Name</div>
+                                <div *ngIf="mobno['Name1'].errors?.['pattern'] &&mobno['Name1'].dirty">*Please enter Valid Course Name</div>
+                            </div>
+                        </div>
+                </div> 
+            </div>     
+                <br>
+                <button type="submit" class="custom button1 ad" [disabled]="!formGrp.valid">Add</button>
+                <button type="button" class="custom button1 ad del" (click)="btnClick1();">Back</button>
+            </form>
+    </div>
+    <app-footer></app-footer>
+</div>

@@ -19,6 +19,11 @@ export class AppComponent implements OnInit {
     });
   }
   onclick(){
-    this.router.navigateByUrl('');
+    this.router.navigate(['']).then(()=>window.location.reload());
+    localStorage.removeItem('token');
+    // this.login.logout();
+  }
+  refresh(): void {
+    window.location.reload();
   }
 }

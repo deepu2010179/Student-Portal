@@ -1,0 +1,68 @@
+<div class="container-fluid main">
+    <div class="main1">
+      <div class="row">
+        <div class="col-10">
+          <h1 class="head" id="h1">
+            Edit Course ({{ this.editTeacherrequest.name }})
+          </h1>
+        </div>
+        <div class="col-2">
+          <h1 id="h1">{{ getLoggedInUserName() }}</h1>
+        </div>
+      </div>
+      <hr />
+      <form #form="ngForm" (ngSubmit)="confirmDialog()">
+        <div class="row">
+          <div class="col-6">
+            <div class="">
+              <label for="teacher" class="">Teacher Name:</label>
+              <input
+                type="text"
+                class="teacher"
+                id="teacher"
+                [(ngModel)]="editTeacherrequest.name"
+                name="teacher"
+              />
+            </div>
+            <div class="">
+                <label for="email" class="">Email:</label>
+                <input
+                  type="text"
+                  class="email"
+                  id="email"
+                  [(ngModel)]="editTeacherrequest.email"
+                  name="email"
+                />
+              </div>
+          </div>
+          <div class="col-6">
+            <div class="">
+                <label for="mobile" class="">Mobile Number:</label>
+                <input
+                  type="text"
+                  class="mobile"
+                  id="mobile"
+                  [(ngModel)]="editTeacherrequest.mobile"
+                  name="mobile"
+                />
+              </div>
+          </div>
+        </div>
+        <button
+            type="submit"
+            class="custom button1 ad"
+          >
+            Save
+          </button>
+          <button
+            type="button"
+            class="custom button1 ad del"
+            (click)="btnClick1()"
+          >
+            Back
+          </button>
+      </form>
+    </div>
+    <app-footer></app-footer>
+  </div>
+  

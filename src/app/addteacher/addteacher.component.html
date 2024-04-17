@@ -1,0 +1,50 @@
+<div class="container-fluid main">
+    <div class="main1">
+        <div class="row">
+            <div class="col-10"><h1 class="head" id="h1">Add Teacher</h1></div>
+            <div class="col-2"><h1 id="h1">{{ getLoggedInUserName() }}</h1></div>
+        </div>
+        <hr>
+            <form class="" #form="ngForm" (ngSubmit)="addTeacher()">
+                <div class="row">
+                    <div class="col-6">
+                        <div [formGroup]="formGrp" novalidate>
+                            <label class="loginlabel" for="teachername">Teacher Name:</label>
+                            <input #teachername class="loginput" type="text" id="teachername" name="teachername" [(ngModel)]="addTeacherrequest.name" formControlName="Name1"
+                            ng-model-options="{standalone:true}"/>
+                            <div *ngIf="mobno['Name1'].touched && mobno['Name1'].invalid" class="show">
+                                <div *ngIf="mobno['Name1'].errors?.['required'] &&mobno['Name1'].dirty">*Please enter Course Name</div>
+                                <div *ngIf="mobno['Name1'].errors?.['pattern'] &&mobno['Name1'].dirty">*Please enter Valid Course Name</div>
+                            </div>
+                        </div>
+                        <div [formGroup]="formGrp" novalidate>
+                            <label class="loginlabel" for="mobile">Mobile Number:</label>
+                            <input #mobile class="loginput" type="text" id="mobile" name="mobile" [(ngModel)]="addTeacherrequest.mobile" formControlName="mobileNumber"
+                            ng-model-options="{standalone:true}" (change)="Checkmobile(addTeacherrequest.mobile)"/>
+                            <div *ngIf="this.bool2" class="show">*Mobile Number Already exists!!</div>
+                            <div *ngIf="mobno['mobileNumber'].touched && mobno['mobileNumber'].invalid" class="show">
+                                <div *ngIf="mobno['mobileNumber'].errors?.['required'] &&mobno['mobileNumber'].dirty">*Please enter Mobile Number</div>
+                                <div *ngIf="mobno['mobileNumber'].errors?.['pattern'] &&mobno['mobileNumber'].dirty">*Please enter valid Mobile Number</div>
+                            </div>
+                        </div>
+                </div> 
+                <div class="col-6">
+                    <div [formGroup]="formGrp" novalidate>
+                        <label class="loginlabel" for="email">Email:</label>
+                        <input #email class="loginput" type="text" id="email" name="email" [(ngModel)]="addTeacherrequest.email" formControlName="eMail"
+                        ng-model-options="{standalone:true}" (change)="Checkemail(addTeacherrequest.email)"/>
+                        <div *ngIf="this.bool1" class="show">*Email Id Already exists!!</div>
+                        <div *ngIf="mobno['eMail'].touched && mobno['eMail'].invalid" class="show">
+                            <div *ngIf="mobno['eMail'].errors?.['required'] &&mobno['eMail'].dirty">*Please enter Email Id</div>
+                            <div *ngIf="mobno['eMail'].errors?.['pattern'] &&mobno['eMail'].dirty">*Please enter valid Email Id</div>
+                        </div>
+                    </div>
+                </div>
+            </div>     
+                <br>
+                <button type="submit" class="custom button1 ad" [disabled]="!formGrp.valid||this.bool1||this.bool2">Add</button>
+                <button type="button" class="custom button1 ad del" (click)="btnClick1();">Back</button>
+            </form>
+    </div>
+    <app-footer></app-footer>
+</div>

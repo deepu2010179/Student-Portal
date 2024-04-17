@@ -1,25 +1,30 @@
-
-  <div class="container-fluid main">
-    <div class="main1">
-      <div class="row">
-        <div class="col-10"><h1 class="head" id="h1">Edit Student ({{this.editStudentrequest1.name}})</h1></div>
-        <div class="col-2"><h1 id="h1">{{ getLoggedInUserName() }}</h1></div>
+<div class="container-fluid main">
+  <div class="main1">
+    <div class="row">
+      <div class="col-10">
+        <h1 class="head" id="h1">
+          Edit Student ({{ this.editStudentrequest1.name }})
+        </h1>
       </div>
-      <hr>
+      <div class="col-2">
+        <h1 id="h1">{{ getLoggedInUserName() }}</h1>
+      </div>
+    </div>
+    <hr />
     <form #form="ngForm" (ngSubmit)="confirmDialog()">
-     <div class="row">
-       <div class="col-6">
-        <div class="">
-          <label for="code" class="">Code:</label>
-          <input
-            type="text"
-            class="code"
-            id="code"
-            [(ngModel)]="editStudentrequest1.code"
-            name="code"
-            readonly
-          />
-        </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="">
+            <label for="code" class="">Code:</label>
+            <input
+              type="text"
+              class="code"
+              id="code"
+              [(ngModel)]="editStudentrequest1.code"
+              name="code"
+              readonly
+            />
+          </div>
           <div class="">
             <label for="name" class="">Name:</label>
             <input
@@ -66,97 +71,141 @@
               (change)="Checkmobile(editStudentrequest1.mobile)"
               ng-model-options="{standalone:true}"
             />
-            <div *ngIf="this.bool2" class="show">*Mobile Number Already exists!!</div>
-            <div *ngIf="mobno['mobileNumber'].touched && mobno['mobileNumber'].invalid" class="show">
-              <div *ngIf="mobno['mobileNumber'].errors?.['required'] &&mobno['mobileNumber'].dirty">*Please enter Mobile Number</div>
-              <div *ngIf="mobno['mobileNumber'].errors?.['pattern'] &&mobno['mobileNumber'].dirty">*Please enter valid(10 digit) Mobile Number</div>
+            <div *ngIf="this.bool2" class="show">
+              *Mobile Number Already exists!!
+            </div>
+            <div
+              *ngIf="
+                mobno['mobileNumber'].touched && mobno['mobileNumber'].invalid
+              "
+              class="show"
+            >
+              <div
+                *ngIf="mobno['mobileNumber'].errors?.['required'] &&mobno['mobileNumber'].dirty"
+              >
+                *Please enter Mobile Number
+              </div>
+              <div
+                *ngIf="mobno['mobileNumber'].errors?.['pattern'] &&mobno['mobileNumber'].dirty"
+              >
+                *Please enter valid(10 digit) Mobile Number
+              </div>
             </div>
           </div>
-          <button type="submit" class="custom button1 ad" [disabled]="!formGrp.valid">Save</button>
-          <button type="button" class="custom button1 ad del" (click)="btnClick1();">Back</button>
-      </div>
-      <div class="col-6">
-        <div class="" [formGroup]="formGrp" novalidate>
-          <label for="email" class="">Email:</label>
-          <input
-            type="text"
-            class=""
-            id="email"
-            [(ngModel)]="editStudentrequest1.email"
-            name="email"
-            formControlName="eMail"
-            (change)="Checkemail(editStudentrequest1.email)"
-              ng-model-options="{standalone:true}"
-          />
-          <div *ngIf="this.bool1" class="show">*Email Id Already exists!!</div>
-          <div *ngIf="mobno['eMail'].touched && mobno['eMail'].invalid" class="show">
-            <div *ngIf="mobno['eMail'].errors?.['required'] &&mobno['eMail'].dirty">*Please enter Email Id</div>
-            <div *ngIf="mobno['eMail'].errors?.['pattern'] &&mobno['eMail'].dirty">*Please enter valid Email Id</div>
-          </div>
-        </div>
-        <div class="">
-          <label for="address1" class="">Address1:</label>
-          <input
-            type="text"
-            class=""
-            id="address1"
-            [(ngModel)]="editStudentrequest1.address1"
-            name="address1"
-          />
-        </div>
-        <div class="" *ngIf="states.length > 0">
-          <label for="state" class="">State:</label>
-          <select
-            id="state"
-            class=""
-            [(ngModel)]="editStudentrequest1.stateId"
-            name="state"
-            #state
-           (change)="onStateChange()"
-  
+          <button
+            type="submit"
+            class="custom button1 ad"
+            [disabled]="!formGrp.valid"
           >
-            <option *ngFor="let state of states" [value]="state.id">
-              {{ state.name }}
-            </option>
-          </select>
+            Save
+          </button>
+          <button
+            type="button"
+            class="custom button1 ad del"
+            (click)="btnClick1()"
+          >
+            Back
+          </button>
         </div>
-        <div class="">
-          <label for="maritalStatus" class="">Marital Status:</label>
-          <select id="maritalStatus" class="" [(ngModel)]="editStudentrequest1.maritalStatus" name="maritalStatus">
-          <option value="0">Single</option>
-          <option value="1">Married</option>
-          <option value="2">Separated</option>
-          </select>
-        </div>
-        <div class="">
-          <div class="form-check form-check-inline">
+        <div class="col-6">
+          <div class="" [formGroup]="formGrp" novalidate>
+            <label for="email" class="">Email:</label>
             <input
-              type="radio"
-              class="form-check-input"
-              value="0"
-              id="gender1"
-              name="gender"
-              [(ngModel)]="editStudentrequest1.gender"
-              [value]="0"
+              type="text"
+              class=""
+              id="email"
+              [(ngModel)]="editStudentrequest1.email"
+              name="email"
+              formControlName="eMail"
+              (change)="Checkemail(editStudentrequest1.email)"
+              ng-model-options="{standalone:true}"
             />
-            <label for="gender" class="form-check-label">Male</label>
+            <div *ngIf="this.bool1" class="show">
+              *Email Id Already exists!!
+            </div>
+            <div
+              *ngIf="mobno['eMail'].touched && mobno['eMail'].invalid"
+              class="show"
+            >
+              <div
+                *ngIf="mobno['eMail'].errors?.['required'] &&mobno['eMail'].dirty"
+              >
+                *Please enter Email Id
+              </div>
+              <div
+                *ngIf="mobno['eMail'].errors?.['pattern'] &&mobno['eMail'].dirty"
+              >
+                *Please enter valid Email Id
+              </div>
+            </div>
           </div>
-          <div class="form-check form-check-inline">
+          <div class="">
+            <label for="address1" class="">Address1:</label>
             <input
-              type="radio"
-              class="form-check-input"
-              value="1"
-              id="gender"
-              name="gender"
-              [(ngModel)]="editStudentrequest1.gender"
-              [value]="1"
+              type="text"
+              class=""
+              id="address1"
+              [(ngModel)]="editStudentrequest1.address1"
+              name="address1"
             />
-            <label for="gender" class="form-check-label">Female</label>
+          </div>
+          <div class="" *ngIf="states.length > 0">
+            <label for="state" class="">State:</label>
+            <select
+              id="state"
+              class=""
+              [(ngModel)]="editStudentrequest1.stateId"
+              name="state"
+              #state
+              (change)="onStateChange()"
+            >
+              <option *ngFor="let state of states" [value]="state.id">
+                {{ state.name }}
+              </option>
+            </select>
+          </div>
+          <div class="">
+            <label for="maritalStatus" class="">Marital Status:</label>
+            <select
+              id="maritalStatus"
+              class=""
+              [(ngModel)]="editStudentrequest1.maritalStatus"
+              name="maritalStatus"
+            >
+              <option value="0">Single</option>
+              <option value="1">Married</option>
+              <option value="2">Separated</option>
+            </select>
+          </div>
+          <div class="">
+            <div class="form-check form-check-inline">
+              <input
+                type="radio"
+                class="form-check-input"
+                value="0"
+                id="gender1"
+                name="gender"
+                [(ngModel)]="editStudentrequest1.gender"
+                [value]="0"
+              />
+              <label for="gender" class="form-check-label">Male</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                type="radio"
+                class="form-check-input"
+                value="1"
+                id="gender"
+                name="gender"
+                [(ngModel)]="editStudentrequest1.gender"
+                [value]="1"
+              />
+              <label for="gender" class="form-check-label">Female</label>
+            </div>
           </div>
         </div>
       </div>
-    </div>
     </form>
-    </div>
-    <app-footer></app-footer>
   </div>
+  <app-footer></app-footer>
+</div>

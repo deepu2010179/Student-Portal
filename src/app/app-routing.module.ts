@@ -9,6 +9,15 @@ import { LandingpageComponent } from './landingpage/landingpage.component';
 import { StudentpageComponent } from './studentpage/studentpage.component';
 import { AdduserComponent } from './adduser/adduser.component';
 import { UserComponent } from './user/user.component';
+import { RoleComponent } from './role/role.component';
+import { AddroleComponent } from './addrole/addrole.component';
+import { CourseComponent } from './course/course.component';
+import { AddcourseComponent } from './addcourse/addcourse.component';
+import { EditcourseComponent } from './editcourse/editcourse.component';
+import { TeacherComponent } from './teacher/teacher.component';
+import { AddteacherComponent } from './addteacher/addteacher.component';
+import { EditteacherComponent } from './editteacher/editteacher.component';
+import { AddclassComponent } from './addclass/addclass.component';
 
 const routes: Routes = [
   {
@@ -20,8 +29,36 @@ const routes: Routes = [
     component:UserComponent
   },
   {
+    path:'students/role',
+    component:RoleComponent
+  },
+  {
+    path:'students/course',
+    component:CourseComponent
+  },
+  {
+    path:'students/teacher',
+    component:TeacherComponent
+  },
+  {
     path:'students/user/adduser',
     component:AdduserComponent
+  },
+  {
+    path:'students/role/addRole',
+    component:AddroleComponent
+  },
+  {
+    path:'students/course/addCourse',
+    component:AddcourseComponent
+  },
+  {
+    path:'students/teacher/addTeacher',
+    component:AddteacherComponent
+  },
+  {
+    path:'students/class/addClass',
+    component:AddclassComponent
   },
   {
     path:'students/studentpage',
@@ -54,7 +91,16 @@ const routes: Routes = [
       {
         path:'students/edit/:id',
         component:EditstudentComponent
-        },{
+        },
+        {
+          path:'students/course/edit/:id',
+          component:EditcourseComponent
+          },
+          {
+            path:'students/teacher/edit/:id',
+            component:EditteacherComponent
+            },
+        {
           path:'login',
           component:LoginComponent
           }
