@@ -17,6 +17,8 @@ import { role } from '../models/role.model';
 import { course } from '../models/course.model';
 import { teacher } from '../models/teacher.model';
 import { Class } from '../models/class.model';
+import { section } from '../models/section.model';
+import { subject } from '../models/subject.model';
  
 @Injectable({
   providedIn: 'root'
@@ -64,6 +66,14 @@ export class StudentService {
  getAllClasses():Observable<Class[]>{
   const headers = this.getHeaders();
   return this.http.get<Class[]>(this.baseApiUrl+'/api/Class/classes',{headers});
+ }
+ getAllSections():Observable<section[]>{
+  const headers = this.getHeaders();
+  return this.http.get<section[]>(this.baseApiUrl+'/api/Section/sections',{headers});
+ }
+ getAllSubjects():Observable<subject[]>{
+  const headers = this.getHeaders();
+  return this.http.get<subject[]>(this.baseApiUrl+'/api/Subject/subjects',{headers});
  }
  
  addStudent(addStudentrequest1:student1): Observable<student1>{
@@ -160,6 +170,28 @@ addCourse(addCourserequest:course): Observable<course>{
   addClassrequest.modifiedOn = currentDateAndTime;
   return this.http.post<Class>(this.baseApiUrl+'/api/Class/addNewClass',addClassrequest,{headers});
  }
+ addSection(addSectionrequest:section): Observable<section>{
+  const headers = this.getHeaders();
+  addSectionrequest.id=0;
+  const currentDateAndTime: Date = new Date();
+  addSectionrequest.createdBy= 1;
+  addSectionrequest.createdOn = currentDateAndTime;
+  addSectionrequest.modifiedBy = 1;
+  addSectionrequest.isActive = true;
+  addSectionrequest.modifiedOn = currentDateAndTime;
+  return this.http.post<section>(this.baseApiUrl+'/api/Section/addNewSection',addSectionrequest,{headers});
+ }
+ addSubject(addSubjectrequest:subject): Observable<subject>{
+  const headers = this.getHeaders();
+  addSubjectrequest.id=0;
+  const currentDateAndTime: Date = new Date();
+  addSubjectrequest.createdBy= 1;
+  addSubjectrequest.createdOn = currentDateAndTime;
+  addSubjectrequest.modifiedBy = 1;
+  addSubjectrequest.isActive = true;
+  addSubjectrequest.modifiedOn = currentDateAndTime;
+  return this.http.post<subject>(this.baseApiUrl+'/api/Subject/addNewSubject',addSubjectrequest,{headers});
+ }
 getHeaders() {
     const token = this.getToken();
     return new HttpHeaders({
@@ -183,9 +215,25 @@ getHeaders() {
   const headers = this.getHeaders();
   return this.http.get<Class>(this.baseApiUrl+'/api/Class/'+id,{headers});
  }
+ getSection(id:string):Observable<section>{
+  const headers = this.getHeaders();
+  return this.http.get<section>(this.baseApiUrl+'/api/Section/'+id,{headers});
+ }
+ getSubject(id:string):Observable<subject>{
+  const headers = this.getHeaders();
+  return this.http.get<subject>(this.baseApiUrl+'/api/Subject/'+id,{headers});
+ }
  getClassByCourseId(id:string|null):Observable<Class[]>{
   const headers = this.getHeaders();
   return this.http.get<Class[]>(this.baseApiUrl+'/api/Class/courseid/'+id,{headers});
+ }
+ getSectionByClassId(id:string|null):Observable<section[]>{
+  const headers = this.getHeaders();
+  return this.http.get<section[]>(this.baseApiUrl+'/api/Section/classid/'+id,{headers});
+ }
+ getSubjectByClassId(id:string|null):Observable<subject[]>{
+  const headers = this.getHeaders();
+  return this.http.get<subject[]>(this.baseApiUrl+'/api/Subject/classid/'+id,{headers});
  }
  updateStudent(id:number,updateStudentRequest:student1):Observable<student1>{
   const headers = this.getHeaders();
@@ -211,6 +259,18 @@ updateClass(id:number,updateClassRequest:course):Observable<Class>{
   updateClassRequest.modifiedOn = currentDateAndTime;
   return this.http.put<Class>(this.baseApiUrl+'/api/Class/'+id,updateClassRequest,{headers});
 }
+updateSection(id:number,updateSectionRequest:section):Observable<section>{
+  const headers = this.getHeaders();
+  const currentDateAndTime: Date = new Date();
+  updateSectionRequest.modifiedOn = currentDateAndTime;
+  return this.http.put<section>(this.baseApiUrl+'/api/Section/'+id,updateSectionRequest,{headers});
+}
+updateSubject(id:number,updateSubjectRequest:subject):Observable<subject>{
+  const headers = this.getHeaders();
+  const currentDateAndTime: Date = new Date();
+  updateSubjectRequest.modifiedOn = currentDateAndTime;
+  return this.http.put<subject>(this.baseApiUrl+'/api/Subject/'+id,updateSubjectRequest,{headers});
+}
 deleteStudent(id:number):Observable<student1>{
   const headers = this.getHeaders();
   return this.http.delete<student1>(this.baseApiUrl+'/api/Student/'+id,{headers});
@@ -234,6 +294,14 @@ deleteTeacher(id:number):Observable<teacher>{
 deleteClass(id:number):Observable<Class>{
   const headers = this.getHeaders();
   return this.http.delete<Class>(this.baseApiUrl+'/api/Class/'+id,{headers});
+}
+deleteSection(id:number):Observable<section>{
+  const headers = this.getHeaders();
+  return this.http.delete<section>(this.baseApiUrl+'/api/Section/'+id,{headers});
+}
+deleteSubject(id:number):Observable<subject>{
+  const headers = this.getHeaders();
+  return this.http.delete<subject>(this.baseApiUrl+'/api/Subject/'+id,{headers});
 }
 getStates(): Observable<state> {
   const headers = this.getHeaders();

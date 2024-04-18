@@ -1,0 +1,48 @@
+<div class="container-fluid main">
+    <div class="main1">
+        <div class="row">
+            <div class="col-10"><h1 class="head" id="h1">Add Subject</h1></div>
+            <div class="col-2"><h1 id="h1">{{ getLoggedInUserName() }}</h1></div>
+        </div>
+        <hr>
+            <form class="" #form="ngForm" (ngSubmit)="addSubject()">
+                <div class="row">
+                    <div class="col-6">
+                        <div [formGroup]="formGrp" novalidate>
+                            <label class="loginlabel" for="subjectcode">Subject Code:</label>
+                            <input #subjectcode class="loginput" type="text" id="subjectcode" name="subjectcode" [(ngModel)]="addSubjectrequest.subjectCode" formControlName="Name1"
+                            ng-model-options="{standalone:true}"/>
+                            <div *ngIf="mobno['Name1'].touched && mobno['Name1'].invalid" class="show">
+                                <div *ngIf="mobno['Name1'].errors?.['required'] &&mobno['Name1'].dirty">*Please enter Subject Code</div>
+                                <div *ngIf="mobno['Name1'].errors?.['pattern'] &&mobno['Name1'].dirty">*Please enter Valid Subject Code</div>
+                            </div>
+                        </div>
+                        <div [formGroup]="formGrp" novalidate>
+                            <label class="loginlabel" for="lectures">Total Lectures:</label>
+                            <input #subjectcode class="loginput" type="number" id="lectures" name="lectures" [(ngModel)]="addSubjectrequest.totalLectures" formControlName="Name2"
+                            ng-model-options="{standalone:true}"/>
+                            <div *ngIf="mobno['Name2'].touched && mobno['Name2'].invalid" class="show">
+                                <div *ngIf="mobno['Name2'].errors?.['required'] &&mobno['Name2'].dirty">*Please enterTotal Lectures</div>
+                                <div *ngIf="mobno['Name2'].errors?.['pattern'] &&mobno['Name2'].dirty">*Please enter Valid Total Lectures</div>
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="col-6">
+                        <div [formGroup]="formGrp" novalidate>
+                            <label class="loginlabel" for="subjectname">Subject Name:</label>
+                            <input #subjectcode class="loginput" type="text" id="subjectname" name="subjectname" [(ngModel)]="addSubjectrequest.name" formControlName="Name1"
+                            ng-model-options="{standalone:true}"/>
+                            <div *ngIf="mobno['Name1'].touched && mobno['Name1'].invalid" class="show">
+                                <div *ngIf="mobno['Name1'].errors?.['required'] &&mobno['Name1'].dirty">*Please enter Subject Name</div>
+                                <div *ngIf="mobno['Name1'].errors?.['pattern'] &&mobno['Name1'].dirty">*Please enter Valid Subject Name</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>     
+                <br>
+                <button type="submit" class="custom button1 ad" [disabled]="!formGrp.valid">Add</button>
+                <button type="button" class="custom button1 ad del" (click)="btnClick1();">Back</button>
+            </form>
+    </div>
+    <app-footer></app-footer>
+</div>

@@ -1,0 +1,38 @@
+<!-- <div class="container-fluid main"> -->
+    <div class="main1">
+        <div class="row">
+          <div class="col-10"><h1 id="h1">Section Management</h1></div>
+        </div>
+          <hr>
+          <div class="row">
+            <div class="col-2">
+              <div class="rap">
+                <button type="button" class="custom button1 ad" (click)="btnClick();" title="Add Section"><i class="fa fa-plus"></i></button>  
+                <button type="button" class="custom button2 ad del" (click)="confirmDialog();" [disabled]="selectedRecords.length === 0" title="Delete Section"><i class="fa fa-trash "></i></button>
+              </div>
+            </div>
+          <div class="table-responsive">
+              <table id="students" *ngIf="sections&&sections.length>0">
+                <thead>
+                  <tr>
+                    <th style="padding-left: 1%;">Select</th>
+                    <th>Section Name</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor = "let section of sections">
+                    <td><span><input type="checkbox" [checked]="isSelected(section)" (change)="checkSelection(section)"></span></td>
+                    <td><span>{{section.name}}</span></td>
+                    <td><p><button type="button" class="custom button1" [routerLink]="['/students/section','edit',section.id]" title="Edit"><i class="fa fa-pencil"></i></button></p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>    
+            </div>
+            <!-- <div class="page">
+              <button type="button" class="custom button1 ad del" (click)="btnClick1();">Back</button>
+            </div> -->
+      </div>
+  <!-- </div> -->
+  

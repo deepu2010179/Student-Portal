@@ -41,6 +41,13 @@ import { EditteacherComponent } from './editteacher/editteacher.component';
 import { DialogcComponent } from './dialogc/dialogc.component';
 import { ClassComponent } from './class/class.component';
 import { AddclassComponent } from './addclass/addclass.component';
+import { SectionComponent } from './section/section.component';
+import { AddsectionComponent } from './addsection/addsection.component';
+import { EditsectionComponent } from './editsection/editsection.component';
+import { EditclassComponent } from './editclass/editclass.component';
+import { SubjectComponent } from './subject/subject.component';
+import { AddsubjectComponent } from './addsubject/addsubject.component';
+import { EditsubjectComponent } from './editsubject/editsubject.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +74,14 @@ import { AddclassComponent } from './addclass/addclass.component';
     EditteacherComponent,
     DialogcComponent,
     ClassComponent,
-    AddclassComponent
+    AddclassComponent,
+    SectionComponent,
+    AddsectionComponent,
+    EditsectionComponent,
+    EditclassComponent,
+    SubjectComponent,
+    AddsubjectComponent,
+    EditsubjectComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,68 @@
+<div class="container-fluid main">
+    <div class="main1">
+      <div class="row">
+        <div class="col-10">
+          <h1 class="head" id="h1">
+            Edit Subject ({{ this.editSubjectrequest.name }})
+          </h1>
+        </div>
+        <div class="col-2">
+          <h1 id="h1">{{ getLoggedInUserName() }}</h1>
+        </div>
+      </div>
+      <hr />
+      <form #form="ngForm" (ngSubmit)="confirmDialog()">
+        <div class="row">
+          <div class="col-6">
+            <div class="">
+              <label for="subjectcode" class="">Subject Code:</label>
+              <input
+                type="text"
+                class="subjectcode"
+                id="subjectcode"
+                [(ngModel)]="editSubjectrequest.subjectCode"
+                name="subjectcode"
+              />
+            </div>
+            <div class="">
+                <label for="lectures" class="loginlabel">Total Lectures:</label>
+                <input
+                  type="number"
+                  class="loginput"
+                  id="lectures"
+                  [(ngModel)]="editSubjectrequest.totalLectures"
+                  name="lectures"
+                />
+              </div>
+          </div>
+          <div class="col-6">
+            <div class="">
+              <label for="subjectname" class="">Subject Name:</label>
+              <input
+                type="text"
+                class="subjectname"
+                id="subjectname"
+                [(ngModel)]="editSubjectrequest.name"
+                name="subjectname"
+              />
+            </div>
+          </div>
+        </div>
+        <button
+            type="submit"
+            class="custom button1 ad"
+          >
+            Save
+          </button>
+          <button
+            type="button"
+            class="custom button1 ad del"
+            (click)="btnClick1()"
+          >
+            Back
+          </button>
+      </form>
+    </div>
+    <app-footer></app-footer>
+  </div>
+  

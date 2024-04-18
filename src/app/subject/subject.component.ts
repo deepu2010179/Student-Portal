@@ -1,20 +1,21 @@
 import { Component } from '@angular/core';
-import { Class } from '../models/class.model';
+import { subject } from '../models/subject.model';
 import { StudentService } from '../student/student.service';
-import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogModel, DialogComponent } from '../dialog/dialog.component';
 import { Router } from '@angular/router';
 import { SharedService } from '../student/shared.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogModel, DialogComponent } from '../dialog/dialog.component';
 
 @Component({
-  selector: 'app-class',
-  templateUrl: './class.component.html',
-  styleUrl: './class.component.css'
+  selector: 'app-subject',
+  templateUrl: './subject.component.html',
+  styleUrl: './subject.component.css'
 })
-export class ClassComponent {
-  classes:Class[]=[];
-  selectedRecords: Array<Class> = [];
+export class SubjectComponent {
+  subjects:subject[]=[];
+  selectedRecords: Array<subject> = [];
   constructor(private service:StudentService,private router:Router,private mat:MatDialog,private sh:SharedService){}
+  public classid:string|null='';
   public courseid:string|null='';
   ngOnInit(): void{
     // this.service.getAllClasses().subscribe({
@@ -22,21 +23,24 @@ export class ClassComponent {
     //     this.classes=classes;
     //   }
     // })
+    this.sh.classId$.subscribe(id => {
+      this.classid=id;
+      this.getByClassId(id);
+    });
     this.sh.courseId$.subscribe(id => {
       this.courseid=id;
-      this.getByCourseId(id);
     });
   }
-  checkSelection(clas: Class): void {
-    if (this.isSelected(clas)) {
+  checkSelection(subject: subject): void {
+    if (this.isSelected(subject)) {
       this.selectedRecords = this.selectedRecords.filter(
-        (selectedRecord) => selectedRecord.id !== clas.id
+        (selectedRecord) => selectedRecord.id !== subject.id
       );
     } else {
-      this.selectedRecords.push(clas);
+      this.selectedRecords.push(subject);
     }
   }
-  isSelected(record: Class): boolean {
+  isSelected(record: subject): boolean {
     return this.selectedRecords.some((selectedRecord) => selectedRecord.id === record.id);
   }
   confirmDialog(): void {
@@ -54,7 +58,7 @@ export class ClassComponent {
   }
   deleteSelectedRecords() {
     this.selectedRecords.forEach(recordId => {
-      this.service.deleteClass(recordId.id).subscribe(
+      this.service.deleteSubject(recordId.id).subscribe(
         () => {
         },
         error => {
@@ -67,16 +71,16 @@ export class ClassComponent {
   refresh(): void {
     window.location.reload();
   }
-  deleteClass(id:number){
-    this.service.deleteClass(id).subscribe({
+  deleteSection(id:number){
+    this.service.deleteSubject(id).subscribe({
       next:(course)=>{
         this.router.navigate(['students/class']);
       }
     });
   }
   deleteallrecords(){
-    this.classes.forEach(clas=>{
-      this.service.deleteSection(clas.id).subscribe(
+    this.subjects.forEach(subject=>{
+      this.service.deleteSubject(subject.id).subscribe(
         ()=>{
   
         },error=>{
@@ -86,19 +90,19 @@ export class ClassComponent {
     })
   }
   btnClick(){
-    this.router.navigateByUrl('students/class/addClass');
+    this.router.navigateByUrl('students/subject/addSubject');
   };
   btnClick1(){
-    this.router.navigateByUrl('students/course');
+    this.router.navigate(['/students/course','edit',this.courseid]);
   };
   getLoggedInUserName(): string {
     const user = this.service.getLoggedInUser();
     return user;
   }
-  getByCourseId(id:string|null){
-    this.service.getClassByCourseId(id).subscribe({
-      next:(classes)=>{
-        this.classes=classes;
+  getByClassId(id:string|null){
+    this.service.getSubjectByClassId(id).subscribe({
+      next:(subjects)=>{
+        this.subjects=subjects;
       }
     })
   }

@@ -18,6 +18,12 @@ import { TeacherComponent } from './teacher/teacher.component';
 import { AddteacherComponent } from './addteacher/addteacher.component';
 import { EditteacherComponent } from './editteacher/editteacher.component';
 import { AddclassComponent } from './addclass/addclass.component';
+import { AddsectionComponent } from './addsection/addsection.component';
+import { EditclassComponent } from './editclass/editclass.component';
+import { ClassComponent } from './class/class.component';
+import { EditsectionComponent } from './editsection/editsection.component';
+import { AddsubjectComponent } from './addsubject/addsubject.component';
+import { EditsubjectComponent } from './editsubject/editsubject.component';
 
 const routes: Routes = [
   {
@@ -41,6 +47,10 @@ const routes: Routes = [
     component:TeacherComponent
   },
   {
+    path:'students/class',
+    component:ClassComponent
+  },
+  {
     path:'students/user/adduser',
     component:AdduserComponent
   },
@@ -59,6 +69,14 @@ const routes: Routes = [
   {
     path:'students/class/addClass',
     component:AddclassComponent
+  },
+  {
+    path:'students/section/addSection',
+    component:AddsectionComponent
+  },
+  {
+    path:'students/subject/addSubject',
+    component:AddsubjectComponent
   },
   {
     path:'students/studentpage',
@@ -97,9 +115,21 @@ const routes: Routes = [
           component:EditcourseComponent
           },
           {
+            path:'students/class/edit/:id',
+            component:EditclassComponent
+            },
+          {
             path:'students/teacher/edit/:id',
             component:EditteacherComponent
             },
+            {
+              path:'students/section/edit/:id',
+              component:EditsectionComponent
+              },
+              {
+                path:'students/subject/edit/:id',
+                component:EditsubjectComponent
+                },
         {
           path:'login',
           component:LoginComponent
