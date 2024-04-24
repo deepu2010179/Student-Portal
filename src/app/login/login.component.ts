@@ -8,6 +8,7 @@ import { CredentialResponse,PromptMomentNotification } from 'google-one-tap';
 import { MsalService } from '@azure/msal-angular';
 import { filter, takeUntil } from 'rxjs';
 import { InteractionStatus } from '@azure/msal-browser';
+import { SharedService } from '../student/shared.service';
 
 @Component({
   selector: 'app-login',
@@ -22,12 +23,12 @@ export class LoginComponent implements OnInit {
   nav:boolean=false;
   broadcastService: any;
   constructor(private formBuilder:FormBuilder, private authService:StudentService,private router:Router
-    ,private stu:StudentComponent,private _ngZone:NgZone,private auth:MsalService){}
+    ,private stu:StudentComponent,private _ngZone:NgZone,private auth:MsalService,private sh:SharedService){}
   auths:auth={
     username:'',
     password:''
   };
-
+  roles:string[]=[];
   ngOnInit(): void {
     this.setLoginDisplay();
     // @ts-ignore
@@ -69,6 +70,10 @@ export class LoginComponent implements OnInit {
         this.authService.storeToken(response.token);
         this.data=response;
         this.res=this.data.role;
+        this.sh.setRoles(this.res.result);
+        this.sh.role$.subscribe(role => {
+          this.roles = role;
+        });
         this,this.authService.logedname=response.userName;
         this._ngZone.run(()=>{
           if(this.res.result.length>1)
@@ -100,6 +105,7 @@ export class LoginComponent implements OnInit {
         if (response.success) {
           this.data=response.data;
           this.res=this.data.role;
+          this.sh.setRoles(this.res);
           localStorage.setItem('token', response.token);
           // if(this.res.result[0]=="admin"){
           //   this.router.navigate(['students']);
@@ -145,6 +151,7 @@ export class LoginComponent implements OnInit {
             (response)=>{
               this.data=response;
               this.res=this.data.role;
+              this.sh.setRoles(this.res.result);
               localStorage.setItem('token', response.token);
               this,this.authService.logedname=response.userName;
               if(this.res.result.length>1)

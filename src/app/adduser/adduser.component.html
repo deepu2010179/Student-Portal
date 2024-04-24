@@ -70,7 +70,7 @@
                 <div class="form-check form-check-inline" *ngFor="let role of roles">
                     <input class="form-check-input" type="checkbox" [id]="role.id" [value]="role.id" (change)="handleChange($event)" />
                     <label class="form-check-label" [for]="role">{{ role.role_name }}</label>
-                  </div>
+                </div>
                 <br>
                 <button type="submit" class="custom button1 ad" [disabled]="username.value==''||email.value==''||password.value==''||password.value!=cpassword.value">Add</button>
                 <button type="button" class="custom button1 ad del" (click)="btnClick1();">Back</button>

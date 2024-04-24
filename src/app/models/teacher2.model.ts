@@ -1,12 +1,8 @@
-export interface teacher {
+export interface teacher2 {
     id:number;
     name:string;
     email:string;
     mobile:string;
-    courseId:number;
-    classId:number;
-    sectionId:number;
-    dataArray:string;
     isActive:boolean;
     createdBy:number;
     createdOn:Date;

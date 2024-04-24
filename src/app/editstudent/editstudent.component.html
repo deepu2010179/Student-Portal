@@ -92,6 +92,47 @@
               </div>
             </div>
           </div>
+          <div class="">
+            <label for="class">Class:</label>
+            <select
+              id="class"
+              class=""
+              [(ngModel)]="editStudentrequest1.classId"
+              name="class"
+              #class
+              (change)="onClassChange()"
+            >
+              <option *ngFor="let class of classes" [value]="class.id">
+                {{ class.name }}
+              </option>
+            </select>
+          </div>
+          <div class="">
+            <div class="form-check form-check-inline">
+              <input
+                type="radio"
+                class="form-check-input"
+                value="0"
+                id="gender1"
+                name="gender"
+                [(ngModel)]="editStudentrequest1.gender"
+                [value]="0"
+              />
+              <label for="gender" class="form-check-label">Male</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                type="radio"
+                class="form-check-input"
+                value="1"
+                id="gender"
+                name="gender"
+                [(ngModel)]="editStudentrequest1.gender"
+                [value]="1"
+              />
+              <label for="gender" class="form-check-label">Female</label>
+            </div>
+          </div>
           <button
             type="submit"
             class="custom button1 ad"
@@ -177,31 +218,33 @@
               <option value="2">Separated</option>
             </select>
           </div>
+          <div class="" *ngIf="courses.length > 0">
+            <label for="course" class="">Course:</label>
+            <select
+              id="course"
+              class=""
+              [(ngModel)]="editStudentrequest1.courseId"
+              name="course"
+              #course
+             (change)="onCourseChange()"
+             >
+              <option *ngFor="let course of courses" [value]="course.id">
+                {{ course.name }}
+              </option>
+            </select>
+          </div>
           <div class="">
-            <div class="form-check form-check-inline">
-              <input
-                type="radio"
-                class="form-check-input"
-                value="0"
-                id="gender1"
-                name="gender"
-                [(ngModel)]="editStudentrequest1.gender"
-                [value]="0"
-              />
-              <label for="gender" class="form-check-label">Male</label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input
-                type="radio"
-                class="form-check-input"
-                value="1"
-                id="gender"
-                name="gender"
-                [(ngModel)]="editStudentrequest1.gender"
-                [value]="1"
-              />
-              <label for="gender" class="form-check-label">Female</label>
-            </div>
+            <label for="section">Section:</label>
+            <select
+              id="section"
+              class=""
+              [(ngModel)]="editStudentrequest1.sectionId"
+              name="section"
+            >
+              <option *ngFor="let section of sections" [value]="section.id">
+                {{ section.name }}
+              </option>
+            </select>
           </div>
         </div>
       </div>

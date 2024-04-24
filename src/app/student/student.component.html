@@ -74,6 +74,9 @@
             <th (click)="toggleSort('cityName')">City <i *ngIf="clicked" class="fa fa-sort-{{sortAsc===true? 'asc':'desc'}}"></i></th>
             <th class="ms" (click)="toggleSort('genderName')">Gender &nbsp;<i *ngIf="clicked" class="fa fa-sort-{{sortAsc===true? 'asc':'desc'}}"></i></th>
             <th class="ms" (click)="toggleSort('maritalStatusName')">Marital &nbsp;Status <i *ngIf="clicked" class="fa fa-sort-{{sortAsc===true? 'asc':'desc'}}"></i></th>
+            <th class="ms">Course</th>
+            <th class="ms">Class</th>
+            <th class="ms">Section</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -91,6 +94,9 @@
             <td><span>{{student.cityName}}</span></td>
             <td><span>{{student.genderName}}</span></td>
             <td><span>{{student.maritalStatusName}}</span></td>
+            <td><span>{{student.courseName}}</span></td>
+            <td><span>{{student.className}}</span></td>
+            <td><span>{{student.sectionName}}</span></td>
             <td><p><button type="button" class="custom button1" [routerLink]="['/students','edit',student.id]" title="Edit"><i class="fa fa-pencil"></i></button></p>
             </td>
           </tr>

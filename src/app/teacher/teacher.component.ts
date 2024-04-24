@@ -4,6 +4,7 @@ import { StudentService } from '../student/student.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogModel, DialogComponent } from '../dialog/dialog.component';
+import { teacher1 } from '../models/teacher1.model';
 
 @Component({
   selector: 'app-teacher',
@@ -11,8 +12,8 @@ import { ConfirmDialogModel, DialogComponent } from '../dialog/dialog.component'
   styleUrl: './teacher.component.css'
 })
 export class TeacherComponent implements OnInit{
-  teachers:teacher[]=[];
-  selectedRecords: Array<teacher> = [];
+  teachers:teacher1[]=[];
+  selectedRecords: Array<teacher1> = [];
   constructor(private service:StudentService,private router:Router,private mat:MatDialog){}
   ngOnInit(): void{
     this.service.getAllTeachers().subscribe({
@@ -21,7 +22,7 @@ export class TeacherComponent implements OnInit{
       }
     })
   }
-  checkSelection(teacher: teacher): void {
+  checkSelection(teacher: teacher1): void {
     if (this.isSelected(teacher)) {
       this.selectedRecords = this.selectedRecords.filter(
         (selectedRecord) => selectedRecord.id !== teacher.id
@@ -30,7 +31,7 @@ export class TeacherComponent implements OnInit{
       this.selectedRecords.push(teacher);
     }
   }
-  isSelected(record: teacher): boolean {
+  isSelected(record: teacher1): boolean {
     return this.selectedRecords.some((selectedRecord) => selectedRecord.id === record.id);
   }
   confirmDialog(): void {

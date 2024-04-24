@@ -1,15 +1,32 @@
 <header>
   <nav>
     <a href="#"><img class="logo" src="../assets/images/logo.webp" alt="logo" width="142vh"/></a>
+    <form class="form-inline" *ngIf="shouldShowNavBar">
+      <select id="management" class="form-control mr-sm-2" name="management" #management (change)="btnClick1();" [(ngModel)]="selectedm">
+        <option [selected]="true">--Select Management--</option>
+        <option value="student">Student Management</option>
+        <option value="user">User Management</option>
+        <option value="role">Role Management</option>
+        <option value="course">Course Management</option>
+        <option value="teacher">Teacher Management</option>
+      </select>
+    </form>  
+      <form class="form-inline" *ngIf="shouldShowNavBar">
+        <select id="role" class="form-control mr-sm-2" name="role" #role (change)="btnClick2();" [(ngModel)]="selectedr">
+        <option [selected]="true">Sign in as</option>
+        <option value="admin">Admin</option>
+        <option value="student">Student</option>
+        </select>
+      </form>
     <ul class="menu">
       <!-- <li><a href="landing">Home</a></li> -->
-      <li class="pointer" *ngIf="shouldShowNavBar"><a (click)="onclick()">Roles</a>
+      <!-- <li class="pointer" *ngIf="shouldShowNavBar"><a (click)="onclick()">Roles</a>
       <ul class="submenu">
         <li><a routerLink="students">Admin</a></li>
         <li><a routerLink="students">Student</a></li>
       </ul>
-    </li>
-      <li class="pointer" *ngIf="shouldShowNavBar"><a (click)="onclick()">Logout</a></li>
+    </li> -->
+    <li class="pointer" *ngIf="shouldShowNavBar"><a (click)="onclick()">Logout</a></li>
     </ul>
   </nav>
 </header>

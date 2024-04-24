@@ -41,13 +41,28 @@ export class AddsubjectComponent {
     modifiedOn: new Date()
   }
   addSubject(){
+    let firstChar = '';
+    let middleChar = '';
+    let lastChar = '';
     this.addSubjectrequest.class_id=Number(this.classId);
+    const name=this.addSubjectrequest.name.toUpperCase().replace(/\s/g, '');
+    if (name.length >= 1) {
+      firstChar = name[0];
+      lastChar = name[name.length - 1];
+    }
+    if (name.length >= 3) {
+      middleChar = name[Math.floor(name.length / 2)];
+    }
+    const uniqueId = Math.floor(Math.random() * 1000);
+    this.addSubjectrequest.subjectCode = firstChar.toUpperCase() + middleChar.toUpperCase() + lastChar.toUpperCase() + uniqueId;
+    this.addSubjectrequest.subjectCode=this.addSubjectrequest.subjectCode+this.classId;
     this.studentService.addSubject(this.addSubjectrequest).subscribe({
       next:(role:any)=>{
         this.router.navigate(['/students/class','edit',this.classId]);
       }
     });
   }
+
   btnClick1(){
     this.router.navigate(['/students/class','edit',this.classId]);
   };

@@ -1,21 +1,43 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Class } from '../models/class.model';
 import { StudentService } from '../student/student.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogModel, DialogComponent } from '../dialog/dialog.component';
 import { Router } from '@angular/router';
 import { SharedService } from '../student/shared.service';
+import { section } from '../models/section.model';
 
 @Component({
   selector: 'app-class',
   templateUrl: './class.component.html',
   styleUrl: './class.component.css'
 })
-export class ClassComponent {
+export class ClassComponent implements OnInit{
   classes:Class[]=[];
+  addClassrequest:Class={
+    id:0,
+    course_id:0,
+    name:'',
+    session:'',
+    isActive:true,
+    createdBy: 0,
+    createdOn: new Date(),
+    modifiedBy: 0,
+    modifiedOn: new Date()
+  }
+  addClass(){
+    this.addClassrequest.course_id=Number(this.courseid);
+    this.service.addClass(this.addClassrequest).subscribe({
+      next:(role:any)=>{
+        this.router.navigate(['/students/course','edit',this.courseid]);
+      }
+    });
+    this.refresh();
+  }
   selectedRecords: Array<Class> = [];
   constructor(private service:StudentService,private router:Router,private mat:MatDialog,private sh:SharedService){}
   public courseid:string|null='';
+  public classId:string|null='';
   ngOnInit(): void{
     // this.service.getAllClasses().subscribe({
     //   next:(classes)=>{
@@ -25,6 +47,9 @@ export class ClassComponent {
     this.sh.courseId$.subscribe(id => {
       this.courseid=id;
       this.getByCourseId(id);
+    });
+    this.sh.classId$.subscribe(id => {
+      this.classId = id;
     });
   }
   checkSelection(clas: Class): void {
@@ -101,5 +126,17 @@ export class ClassComponent {
         this.classes=classes;
       }
     })
+  }
+  openCustomDialog() {
+    this.service.openDialog('Add Class', 'Name', 'Session')
+      .then(result => {
+        this.addClassrequest.name=result.input1;
+        this.addClassrequest.session=result.input2;
+        console.log('Dialog closed with result:', result.input1);
+        this.addClass();
+      })
+      .catch(error => {
+        console.log('Dialog error:', error);
+      });
   }
 }

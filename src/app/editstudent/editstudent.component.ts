@@ -9,6 +9,9 @@ import { city } from '../models/city.model';
 import { AbstractControl,FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent,ConfirmDialogModel } from '../dialog/dialog.component';
+import { course } from '../models/course.model';
+import { Class } from '../models/class.model';
+import { section } from '../models/section.model';
 
 @Component({
   selector: 'app-editstudent',
@@ -17,6 +20,8 @@ import { DialogComponent,ConfirmDialogModel } from '../dialog/dialog.component';
 })
 export class EditstudentComponent implements OnInit {
   @ViewChild('state') selectedState: ElementRef | undefined;
+  @ViewChild('course') selectedCourse: ElementRef | undefined;
+  @ViewChild('class') selectedClass: ElementRef | undefined;
   formGrp:FormGroup; 
   mobile:string;
   email:string;
@@ -43,7 +48,10 @@ export class EditstudentComponent implements OnInit {
     stateName: '',
     cityName: '',
     genderName: '',
-    maritalStatusName: ''
+    maritalStatusName: '',
+    courseName:'',
+    className:'',
+    sectionName:''
   };
   editStudentrequest1:student1={
     id: 0,
@@ -57,14 +65,21 @@ export class EditstudentComponent implements OnInit {
     cityId: 0,
     gender: 0,
     maritalStatus: 0,
+    courseId:0,
+    classId:0,
+    sectionId:0,
     createdBy:1,
     createdOn: new Date(),
     modifiedBy:1,
     modifiedOn: new Date()
   };
-
+  selectedcl:string='--Select Class--';
+  selectedse:string='--Select Section--';
   states: Array<state>=[];
   cities: Array<city>=[];
+  courses: Array<course>=[];
+  classes: Array<Class>=[];
+  sections: Array<section>=[];
   ngOnInit(): void {
     this.route.paramMap.subscribe({
       next:(params)=>{
@@ -74,6 +89,8 @@ export class EditstudentComponent implements OnInit {
             next:(response)=>{
               this.editStudentrequest1=response;
               this.getCities(this.editStudentrequest1.stateId);
+              this.getClasses(this.editStudentrequest1.courseId);
+              this.getSections(this.editStudentrequest1.classId);
             }
           });
         }
@@ -83,6 +100,25 @@ export class EditstudentComponent implements OnInit {
     this.studentservice.getStates().subscribe((states: any) => {
       this.states = states;
     });
+    this.studentservice.getCourses().subscribe((courses: any) => {
+      this.courses = courses;
+    });
+  }
+  onCourseChange() {
+    let id = this.selectedCourse?.nativeElement.value;
+    if (id) {
+      this.studentservice.getClassesByCourse(id).subscribe((classes: any) => {
+        this.classes = classes;
+      });
+    } 
+  }
+  onClassChange() {
+    let id = this.selectedClass?.nativeElement.value;
+    if (id) {
+      this.studentservice.getSectionsByClass(id).subscribe((sections: any) => {
+        this.sections = sections;
+      });
+    } 
   }
   confirmDialog(): void {
     const message = `Are you sure you want to Edit ?`;
@@ -125,6 +161,20 @@ export class EditstudentComponent implements OnInit {
       if (id) {
         this.studentservice.getCitiesByState(id).subscribe((cities: any) => {
           this.cities = cities;
+        });
+      } 
+    }
+    getClasses(id:number){
+      if (id) {
+        this.studentservice.getClassesByCourse(id).subscribe((classes: any) => {
+          this.classes = classes;
+        });
+      } 
+    }
+    getSections(id:number){
+      if (id) {
+        this.studentservice.getSectionsByClass(id).subscribe((sections: any) => {
+          this.sections = sections;
         });
       } 
     }

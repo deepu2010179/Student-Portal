@@ -19,6 +19,10 @@ import { teacher } from '../models/teacher.model';
 import { Class } from '../models/class.model';
 import { section } from '../models/section.model';
 import { subject } from '../models/subject.model';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogcComponent } from '../dialogc/dialogc.component';
+import { teacher1 } from '../models/teacher1.model';
+import { teacher2 } from '../models/teacher2.model';
  
 @Injectable({
   providedIn: 'root'
@@ -26,8 +30,6 @@ import { subject } from '../models/subject.model';
 export class StudentService {
   @ViewChild('st') stu: ElementRef | undefined;
   private apiKey = 'DeepanshuApiFetch@20112001';
-  
-
   generateId(): string {
     const currentDate = new Date();
     const year = currentDate.getFullYear();
@@ -39,7 +41,7 @@ export class StudentService {
     return id;
   }
   baseApiUrl:string = 'https://localhost:7069';
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private dialog: MatDialog) { }
 
   
  getAllRecords():Observable<student[]>{
@@ -59,9 +61,9 @@ export class StudentService {
   const headers = this.getHeaders();
   return this.http.get<course[]>(this.baseApiUrl+'/api/Course/courses',{headers});
  }
- getAllTeachers():Observable<teacher[]>{
+ getAllTeachers():Observable<teacher1[]>{
   const headers = this.getHeaders();
-  return this.http.get<teacher[]>(this.baseApiUrl+'/api/Teacher/teachers',{headers});
+  return this.http.get<teacher1[]>(this.baseApiUrl+'/api/Teacher/teachers',{headers});
  }
  getAllClasses():Observable<Class[]>{
   const headers = this.getHeaders();
@@ -207,9 +209,9 @@ getHeaders() {
   const headers = this.getHeaders();
   return this.http.get<course>(this.baseApiUrl+'/api/Course/'+id,{headers});
  }
- getTeacher(id:string):Observable<teacher>{
+ getTeacher(id:string):Observable<teacher1>{
   const headers = this.getHeaders();
-  return this.http.get<teacher>(this.baseApiUrl+'/api/Teacher/'+id,{headers});
+  return this.http.get<teacher1>(this.baseApiUrl+'/api/Teacher/'+id,{headers});
  }
  getClass(id:string):Observable<Class>{
   const headers = this.getHeaders();
@@ -247,10 +249,9 @@ updateCourse(id:number,updateCourseRequest:course):Observable<course>{
   updateCourseRequest.modifiedOn = currentDateAndTime;
   return this.http.put<course>(this.baseApiUrl+'/api/Course/'+id,updateCourseRequest,{headers});
 }
-updateTeacher(id:number,updateTeacherRequest:course):Observable<teacher>{
+updateTeacher(id:number,updateTeacherRequest:teacher1):Observable<teacher>{
   const headers = this.getHeaders();
   const currentDateAndTime: Date = new Date();
-  updateTeacherRequest.modifiedOn = currentDateAndTime;
   return this.http.put<teacher>(this.baseApiUrl+'/api/Teacher/'+id,updateTeacherRequest,{headers});
 }
 updateClass(id:number,updateClassRequest:course):Observable<Class>{
@@ -287,9 +288,9 @@ deleteCourse(id:number):Observable<course>{
   const headers = this.getHeaders();
   return this.http.delete<course>(this.baseApiUrl+'/api/Course/'+id,{headers});
 }
-deleteTeacher(id:number):Observable<teacher>{
+deleteTeacher(id:number):Observable<teacher2>{
   const headers = this.getHeaders();
-  return this.http.delete<teacher>(this.baseApiUrl+'/api/Teacher/'+id,{headers});
+  return this.http.delete<teacher2>(this.baseApiUrl+'/api/Teacher/'+id,{headers});
 }
 deleteClass(id:number):Observable<Class>{
   const headers = this.getHeaders();
@@ -306,6 +307,18 @@ deleteSubject(id:number):Observable<subject>{
 getStates(): Observable<state> {
   const headers = this.getHeaders();
   return this.http.get<state>(this.baseApiUrl+'/api/Student',{headers});
+}
+getCourses(): Observable<course> {
+  const headers = this.getHeaders();
+  return this.http.get<course>(this.baseApiUrl+'/api/Student/GetCourses',{headers});
+}
+getClassesByCourse(courseId:number): Observable<Class> {
+  const headers = this.getHeaders();
+  return this.http.get<Class>(this.baseApiUrl+'/api/Student/GetClasses/'+courseId,{headers});
+}
+getSectionsByClass(classId:number): Observable<section> {
+  const headers = this.getHeaders();
+  return this.http.get<section>(this.baseApiUrl+'/api/Student/GetSections/'+classId,{headers});
 }
 getCitiesByState(stateId: number): Observable<city> {
   const headers = this.getHeaders();
@@ -399,5 +412,13 @@ private loggedIn = false;
   public signOutExternal = () =>{
     localStorage.removeItem("token");
     console.log("token deleted");
+  }
+  openDialog(title: string, input1Placeholder: string, input2Placeholder: string): Promise<any> {
+    const dialogRef = this.dialog.open(DialogcComponent, {
+      width: '300px',
+      data: { title, input1Placeholder, input2Placeholder, input1: '', input2: '' }
+    });
+
+    return dialogRef.afterClosed().toPromise();
   }
 }

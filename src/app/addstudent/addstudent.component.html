@@ -72,27 +72,37 @@
           </select>
         </div>
         <div class="">
-          <div class="form-check form-check-inline">
-            <input
-              type="radio"
-              class="form-check-input"
-              value="0"
-              id="gender"
-              name="gender"
-              [(ngModel)]="addStudentrequest1.gender"
-            />
-            <label for="gender" class="form-check-label">Male</label>
+          <div class="" *ngIf="courses.length > 0">
+            <label for="course" class="">Course:</label>
+            <select
+              id="course"
+              class=""
+              [(ngModel)]="addStudentrequest1.courseId"
+              [(ngModel)]="selectedco"
+              name="course"
+              #course
+             (change)="onCourseChange();onClassChange();"
+             >
+             <option [selected]="true">--Select Course--</option>
+              <option *ngFor="let course of courses" [value]="course.id">
+                {{ course.name }}
+              </option>
+            </select>
           </div>
-          <div class="form-check form-check-inline">
-            <input
-              type="radio"
-              class="form-check-input"
-              value="1"
-              id="gender"
-              name="gender"
-              [(ngModel)]="addStudentrequest1.gender"
-            />
-            <label for="gender" class="form-check-label">Female</label>
+          <div class="">
+            <label for="section">Section:</label>
+            <select
+              id="section"
+              class=""
+              [(ngModel)]="addStudentrequest1.sectionId"
+              [(ngModel)]="selectedse"
+              name="section"
+            >
+              <option selected>--Select Section--</option>
+              <option *ngFor="let section of sections" [value]="section.id">
+                {{ section.name }}
+              </option>
+            </select>
           </div>
         </div>
         <button type="submit" class="custom button1 ad" [disabled]="!formGrp.valid">Save</button>
@@ -152,6 +162,45 @@
         <option value="1">Married</option>
         <option value="2">Separated</option>
         </select>
+      </div>
+      <div class="">
+        <label for="class">Class:</label>
+        <select
+          id="class"
+          class=""
+          [(ngModel)]="addStudentrequest1.classId"
+          [(ngModel)]="selectedcl"
+          name="class"
+          #class
+          (change)="onClassChange()"
+        >
+          <option selected>--Select Class--</option>
+          <option *ngFor="let class of classes" [value]="class.id">
+            {{ class.name }}
+          </option>
+        </select>
+      </div>
+      <div class="form-check form-check-inline">
+        <input
+          type="radio"
+          class="form-check-input"
+          value="0"
+          id="gender"
+          name="gender"
+          [(ngModel)]="addStudentrequest1.gender"
+        />
+        <label for="gender" class="form-check-label">Male</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input
+          type="radio"
+          class="form-check-input"
+          value="1"
+          id="gender"
+          name="gender"
+          [(ngModel)]="addStudentrequest1.gender"
+        />
+        <label for="gender" class="form-check-label">Female</label>
       </div>
     </div>
   </div>

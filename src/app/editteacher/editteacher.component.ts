@@ -5,6 +5,7 @@ import { StudentService } from '../student/student.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogModel, DialogComponent } from '../dialog/dialog.component';
 import { teacher } from '../models/teacher.model';
+import { teacher1 } from '../models/teacher1.model';
 
 @Component({
   selector: 'app-editteacher',
@@ -22,16 +23,15 @@ export class EditteacherComponent implements OnInit{
     return this.formGrp.controls;
   }
 
-  editTeacherrequest:teacher={
+  editTeacherrequest:teacher1={
     id: 0,
     name: '',
     email:'',
     mobile:'',
-    isActive:true,
-    createdBy: 0,
-    createdOn: new Date(),
-    modifiedBy: 0,
-    modifiedOn: new Date()
+    courseName:'',
+    className:'',
+    sectionName:'',
+    subjectName:''
   };
 
   ngOnInit(): void {

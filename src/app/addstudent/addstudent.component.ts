@@ -6,6 +6,9 @@ import { city } from '../models/city.model';
 import { StudentService } from '../student/student.service';
 import { Router } from '@angular/router';
 import { AbstractControl,FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { course } from '../models/course.model';
+import { Class } from '../models/class.model';
+import { section } from '../models/section.model';
 
 @Component({
   selector: 'app-addstudent',
@@ -18,6 +21,8 @@ export class AddstudentComponent implements OnInit{
   email:string;
   name:string;
   @ViewChild('state') selectedState: ElementRef | undefined;
+  @ViewChild('course') selectedCourse: ElementRef | undefined;
+  @ViewChild('class') selectedClass: ElementRef | undefined;
   constructor(private fb:FormBuilder, private studentService:StudentService,private router:Router){
     this.mobile='';
     this.email='';
@@ -43,7 +48,10 @@ export class AddstudentComponent implements OnInit{
     stateName: '',
     cityName: '',
     genderName: '',
-    maritalStatusName: ''
+    maritalStatusName: '',
+    courseName:'',
+    className:'',
+    sectionName:''
   };
   addStudentrequest1:student1={
     id: 0,
@@ -57,6 +65,9 @@ export class AddstudentComponent implements OnInit{
     cityId: 0,
     gender: 0,
     maritalStatus: 0,
+    courseId:0,
+    classId:0,
+    sectionId:0,
     createdBy: 0,
     createdOn: new Date(),
     modifiedBy: 0,
@@ -64,11 +75,17 @@ export class AddstudentComponent implements OnInit{
   };
   states: Array<state>=[];
   cities: Array<city>=[];
+  courses: Array<course>=[];
+  classes: Array<Class>=[];
+  sections: Array<section>=[];
   selectedRecords: Array<student> = [];
  
   ngOnInit(): void {
     this.studentService.getStates().subscribe((states: any) => {
       this.states = states;
+    });
+    this.studentService.getCourses().subscribe((courses: any) => {
+      this.courses = courses;
     });
   }
   onStateChange() {
@@ -76,6 +93,22 @@ export class AddstudentComponent implements OnInit{
     if (id) {
       this.studentService.getCitiesByState(id).subscribe((cities: any) => {
         this.cities = cities;
+      });
+    } 
+  }
+  onCourseChange() {
+    let id = this.selectedCourse?.nativeElement.value;
+    if (id) {
+      this.studentService.getClassesByCourse(id).subscribe((classes: any) => {
+        this.classes = classes;
+      });
+    } 
+  }
+  onClassChange() {
+    let id = this.selectedClass?.nativeElement.value;
+    if (id) {
+      this.studentService.getSectionsByClass(id).subscribe((sections: any) => {
+        this.sections = sections;
       });
     } 
   }
@@ -89,6 +122,9 @@ export class AddstudentComponent implements OnInit{
   selecteds:string='--Select State--';
   selectedc:string='--Select City--';
   selectedms:string='--Select Marital Status--';
+  selectedco:string='--Select Course--';
+  selectedcl:string='--Select Class--';
+  selectedse:string='--Select Section--';
   bool1:boolean=false;
   Checkemail(email:string){
     this.studentService.checkemail(email).subscribe((bool:boolean)=>{

@@ -10,4 +10,7 @@ export interface student {
     cityName: string;
     genderName: string;
     maritalStatusName: string;
+    courseName:string;
+    className:string;
+    sectionName:string;
 }

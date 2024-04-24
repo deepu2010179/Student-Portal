@@ -8,7 +8,7 @@
       <div [formGroup]="loginForm">
         <label class="loginlabel" id="loginlabel" for="password">Password:</label>
           <input #password class="loginput" type="password" id="password" name="password" formControlName="password" required> 
-          <span (click)="togglePasswordVisibility(password)">
+          <span (click)="togglePasswordVisibility(password)" id="eye">
             <i class="fa" [ngClass]="{'fa-eye': !showPassword, 'fa-eye-slash': showPassword}"></i>
           </span>
       </div>

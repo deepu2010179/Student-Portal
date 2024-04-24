@@ -247,7 +247,7 @@ nav{
     padding: 0;
     margin: 0;
 } */
-input[type=text], select,input[type=password]{
+input[type=text],input[type=number], select,input[type=password]{
     width: 100%;
     padding: 6px 12px;
     margin: 8px 0;
@@ -335,5 +335,11 @@ th {
     text-align: center;
     text-decoration: none;
     font-size: 14px;
+}
+#eye{
+    margin-left: -10%;
+}
+.addsub{
+    margin-right: 1%;
 }
 

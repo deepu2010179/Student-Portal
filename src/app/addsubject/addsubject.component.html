@@ -8,13 +8,22 @@
             <form class="" #form="ngForm" (ngSubmit)="addSubject()">
                 <div class="row">
                     <div class="col-6">
-                        <div [formGroup]="formGrp" novalidate>
+                        <!-- <div [formGroup]="formGrp" novalidate>
                             <label class="loginlabel" for="subjectcode">Subject Code:</label>
                             <input #subjectcode class="loginput" type="text" id="subjectcode" name="subjectcode" [(ngModel)]="addSubjectrequest.subjectCode" formControlName="Name1"
                             ng-model-options="{standalone:true}"/>
                             <div *ngIf="mobno['Name1'].touched && mobno['Name1'].invalid" class="show">
                                 <div *ngIf="mobno['Name1'].errors?.['required'] &&mobno['Name1'].dirty">*Please enter Subject Code</div>
                                 <div *ngIf="mobno['Name1'].errors?.['pattern'] &&mobno['Name1'].dirty">*Please enter Valid Subject Code</div>
+                            </div>
+                        </div> -->
+                        <div [formGroup]="formGrp" novalidate>
+                            <label class="loginlabel" for="subjectname">Subject Name:</label>
+                            <input #subjectcode class="loginput" type="text" id="subjectname" name="subjectname" [(ngModel)]="addSubjectrequest.name" formControlName="Name1"
+                            ng-model-options="{standalone:true}"/>
+                            <div *ngIf="mobno['Name1'].touched && mobno['Name1'].invalid" class="show">
+                                <div *ngIf="mobno['Name1'].errors?.['required'] &&mobno['Name1'].dirty">*Please enter Subject Name</div>
+                                <div *ngIf="mobno['Name1'].errors?.['pattern'] &&mobno['Name1'].dirty">*Please enter Valid Subject Name</div>
                             </div>
                         </div>
                         <div [formGroup]="formGrp" novalidate>
@@ -27,17 +36,6 @@
                             </div>
                         </div>
                     </div> 
-                    <div class="col-6">
-                        <div [formGroup]="formGrp" novalidate>
-                            <label class="loginlabel" for="subjectname">Subject Name:</label>
-                            <input #subjectcode class="loginput" type="text" id="subjectname" name="subjectname" [(ngModel)]="addSubjectrequest.name" formControlName="Name1"
-                            ng-model-options="{standalone:true}"/>
-                            <div *ngIf="mobno['Name1'].touched && mobno['Name1'].invalid" class="show">
-                                <div *ngIf="mobno['Name1'].errors?.['required'] &&mobno['Name1'].dirty">*Please enter Subject Name</div>
-                                <div *ngIf="mobno['Name1'].errors?.['pattern'] &&mobno['Name1'].dirty">*Please enter Valid Subject Name</div>
-                            </div>
-                        </div>
-                    </div>
                 </div>     
                 <br>
                 <button type="submit" class="custom button1 ad" [disabled]="!formGrp.valid">Add</button>
