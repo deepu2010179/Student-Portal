@@ -8,6 +8,10 @@ import { role } from '../models/role.model';
 export class SharedService {
   private courseIdSubject = new BehaviorSubject<string | null>(null);
   courseId$ = this.courseIdSubject.asObservable();
+  private teachIdSubject = new BehaviorSubject<string | null>(null);
+  teachId$ = this.teachIdSubject.asObservable();
+  private teacherIdSubject = new BehaviorSubject<number>(0);
+  teacherId$ = this.teacherIdSubject.asObservable();
   private classIdSubject = new BehaviorSubject<string | null>(null);
   classId$ = this.classIdSubject.asObservable();
   private roleSubject = new BehaviorSubject<string[]>([]);
@@ -21,5 +25,10 @@ export class SharedService {
   }
   setRoles(id:string[]) {
     this.roles=id;
+  }
+  setTeacherId(id:number){
+    this.teacherIdSubject.next(id);
+  }setTeachId(id: string | null) {
+    this.teachIdSubject.next(id);
   }
 }

@@ -48,6 +48,122 @@
               </div>
           </div>
         </div>
+        <div>
+          <div class="row">
+            <div class="col-10">
+              <h1 class="head" id="h1">
+                Edit Subject 
+              </h1>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-2">
+              <div class="rap">
+                <button type="button" class="custom button2" (click)="confirmDialog1();" [disabled]="selectedRecords.length === 0" title="Delete"><i class="fa fa-trash "></i></button>
+              </div>
+            </div>
+          </div>  
+          <div class="row">
+            <div class="table-responsive">
+              <table id="students" *ngIf="subje&&subje.length>0">
+                <thead>
+                  <tr>
+                    <th>Select</th>
+                    <th>Course</th>
+                    <th>Class</th>
+                    <th>Section</th>
+                    <th>Subject</th>
+                    <!-- <th>Action</th> -->
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor = "let sub of subje">
+                    <td><span><input type="checkbox" [checked]="isSelected(sub)" (change)="checkSelection(sub)"></span></td>
+                    <td><span>{{sub.courseName}}</span></td>
+                    <td><span>{{sub.className}}</span></td>
+                    <td><span>{{sub.sectionName}}</span></td>
+                    <td><span>{{sub.subjectName}}</span></td>
+                    <!-- <td><button type="button" class="custom button2 ad del" (click)="removeSubject(sub)" title="Delete"><i class="fa fa-trash "></i></button>
+                    </td> -->
+                  </tr>
+                </tbody>
+              </table>    
+            </div>
+          </div>
+          <div>
+            <div>
+              <div class="row">
+                <div class="col-10"><h1 class="head" id="h1">Add Subject</h1></div>
+            </div><hr>
+              <div class="row">
+                <div class="col-6">
+                  <div class="" *ngIf="courses.length > 0">
+                    <label for="course" class="">Course:</label>
+                    <select
+                      id="course"
+                      class=""
+                      [(ngModel)]="addsubjectrequest.courseId"
+                      [(ngModel)]="selectedco"
+                      name="course"
+                      #course
+                     (change)="onCourseChange($event); onClassChange($event); courseName(course.selectedOptions[0].text);"
+                     >
+                     <option [selected]="true">--Select Course--</option>
+                      <option *ngFor="let course of courses" [value]="course.id">
+                        {{ course.name }}
+                      </option>
+                    </select>
+                </div>
+                <div class="">
+                  <label for="section">Section:</label>
+                  <select
+                    id="section"
+                    class=""
+                    [(ngModel)]="addsubjectrequest.sectionId"
+                    [(ngModel)]="selectedse"
+                    name="section"
+                    #section
+                    (change)="sectionName(section.selectedOptions[0].text);"
+                  >
+                    <option selected>--Select Section--</option>
+                    <option *ngFor="let section of sections" [value]="section.id">
+                      {{ section.name }}
+                    </option>
+                  </select>
+                </div>
+                </div>
+                <div class="col-6">
+                  <div class="">
+                    <label for="class">Class:</label>
+                    <select
+                      id="class"
+                      class=""
+                      [(ngModel)]="addsubjectrequest.classId"
+                      [(ngModel)]="selectedcl"
+                      name="class"
+                      #class
+                      (change)="onClassChange($event);getsubject($event); className(class.selectedOptions[0].text);"
+                    >
+                      <option selected>--Select Class--</option>
+                      <option *ngFor="let class of classes" [value]="class.id">
+                        {{ class.name }}
+                      </option>
+                    </select>
+                  </div>
+                  <div *ngIf="addsubjectrequest.sectionId!=0">
+                    <label for="subject">Subjects:</label><br><br>
+                    <div class="form-check form-check-inline" *ngFor="let subject of subjects">
+                      <input class="form-check-input" type="checkbox" [id]="subject.id" [value]="subject.id" #subject (change)="handleChange($event,subject.name);"/>
+                      <label class="form-check-label" [for]="subject">{{ subject.name }}</label>
+                   </div>
+                  </div>
+                </div>
+              </div>
+              </div>
+          </div>
+          <br>
+          <button type="button" class="custom button1 ad addsub" (click)="handleButtonClick()" title="Add Subject" [disabled]="this.subj1.length==0"><i class="fa fa-plus"></i></button>
+        </div>
         <button
             type="submit"
             class="custom button1 ad"

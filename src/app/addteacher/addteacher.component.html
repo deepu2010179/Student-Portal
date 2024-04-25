@@ -11,7 +11,7 @@
                         <div [formGroup]="formGrp" novalidate>
                             <label class="loginlabel" for="teachername">Teacher Name:</label>
                             <input #teachername class="loginput" type="text" id="teachername" name="teachername" [(ngModel)]="addTeacherrequest.name" formControlName="Name1"
-                            ng-model-options="{standalone:true}"/>
+                            ng-model-options="{standalone:true}" [readonly]="this.ind==0"/>
                             <div *ngIf="mobno['Name1'].touched && mobno['Name1'].invalid" class="show">
                                 <div *ngIf="mobno['Name1'].errors?.['required'] &&mobno['Name1'].dirty">*Please enter Course Name</div>
                                 <div *ngIf="mobno['Name1'].errors?.['pattern'] &&mobno['Name1'].dirty">*Please enter Valid Course Name</div>
@@ -20,84 +20,99 @@
                         <div [formGroup]="formGrp" novalidate>
                             <label class="loginlabel" for="mobile">Mobile Number:</label>
                             <input #mobile class="loginput" type="text" id="mobile" name="mobile" [(ngModel)]="addTeacherrequest.mobile" formControlName="mobileNumber"
-                            ng-model-options="{standalone:true}" (change)="Checkmobile(addTeacherrequest.mobile)"/>
+                            ng-model-options="{standalone:true}" (change)="Checkmobile(addTeacherrequest.mobile)" [readonly]="this.ind==0"/>
                             <div *ngIf="this.bool2" class="show">*Mobile Number Already exists!!</div>
                             <div *ngIf="mobno['mobileNumber'].touched && mobno['mobileNumber'].invalid" class="show">
                                 <div *ngIf="mobno['mobileNumber'].errors?.['required'] &&mobno['mobileNumber'].dirty">*Please enter Mobile Number</div>
                                 <div *ngIf="mobno['mobileNumber'].errors?.['pattern'] &&mobno['mobileNumber'].dirty">*Please enter valid Mobile Number</div>
                             </div>
                         </div>
-                        <div class="">
-                            <label for="class">Class:</label>
-                            <select
-                              id="class"
-                              class=""
-                              [(ngModel)]="addTeacherrequest.classId"
-                              [(ngModel)]="selectedcl"
-                              name="class"
-                              #class
-                              (change)="onClassChange($event);getsubject($event); className(class.selectedOptions[0].text);"
-                            >
-                              <option selected>--Select Class--</option>
-                              <option *ngFor="let class of classes" [value]="class.id">
-                                {{ class.name }}
-                              </option>
-                            </select>
-                          </div>
-                          <div *ngIf="addTeacherrequest.sectionId!=0">
-                            <div class="form-check form-check-inline" *ngFor="let subject of subjects">
-                              <input class="form-check-input" type="checkbox" [id]="subject.id" [value]="subject.id" #subject (change)="handleChange($event,subject.name);"/>
-                              <label class="form-check-label" [for]="subject">{{ subject.name }}</label>
-                           </div>
-                          </div>
                     </div> 
                 <div class="col-6">
                     <div [formGroup]="formGrp" novalidate>
                         <label class="loginlabel" for="email">Email:</label>
                         <input #email class="loginput" type="text" id="email" name="email" [(ngModel)]="addTeacherrequest.email" formControlName="eMail"
-                        ng-model-options="{standalone:true}" (change)="Checkemail(addTeacherrequest.email)"/>
+                        ng-model-options="{standalone:true}" (change)="Checkemail(addTeacherrequest.email)" [readonly]="this.ind==0"/>
                         <div *ngIf="this.bool1" class="show">*Email Id Already exists!!</div>
                         <div *ngIf="mobno['eMail'].touched && mobno['eMail'].invalid" class="show">
                             <div *ngIf="mobno['eMail'].errors?.['required'] &&mobno['eMail'].dirty">*Please enter Email Id</div>
                             <div *ngIf="mobno['eMail'].errors?.['pattern'] &&mobno['eMail'].dirty">*Please enter valid Email Id</div>
                         </div>
                     </div>
-                    <div class="" *ngIf="courses.length > 0">
-                        <label for="course" class="">Course:</label>
-                        <select
-                          id="course"
-                          class=""
-                          [(ngModel)]="addTeacherrequest.courseId"
-                          [(ngModel)]="selectedco"
-                          name="course"
-                          #course
-                         (change)="onCourseChange($event); onClassChange($event); courseName(course.selectedOptions[0].text);"
-                         >
-                         <option [selected]="true">--Select Course--</option>
-                          <option *ngFor="let course of courses" [value]="course.id">
-                            {{ course.name }}
-                          </option>
-                        </select>
-                    </div>
-                    <div class="">
-                        <label for="section">Section:</label>
-                        <select
-                          id="section"
-                          class=""
-                          [(ngModel)]="addTeacherrequest.sectionId"
-                          [(ngModel)]="selectedse"
-                          name="section"
-                          #section
-                          (change)="sectionName(section.selectedOptions[0].text);"
-                        >
-                          <option selected>--Select Section--</option>
-                          <option *ngFor="let section of sections" [value]="section.id">
-                            {{ section.name }}
-                          </option>
-                        </select>
-                      </div>
                 </div>
-            </div>     
+            </div>    
+            <button type="submit" class="custom button1 ad" [disabled]="!formGrp.valid||this.bool1||this.bool2||this.ind==0">Save</button>
+            <div *ngIf="this.ind==0">
+              <div>
+                <div class="row">
+                  <div class="col-10"><h1 class="head" id="h1">Add Subject</h1></div>
+              </div><hr>
+                <div class="row">
+                  <div class="col-6">
+                    <div class="" *ngIf="courses.length > 0">
+                      <label for="course" class="">Course:</label>
+                      <select
+                        id="course"
+                        class=""
+                        [(ngModel)]="addsubjectrequest.courseId"
+                        [(ngModel)]="selectedco"
+                        name="course"
+                        #course
+                       (change)="onCourseChange($event); onClassChange($event); courseName(course.selectedOptions[0].text);"
+                       >
+                       <option [selected]="true">--Select Course--</option>
+                        <option *ngFor="let course of courses" [value]="course.id">
+                          {{ course.name }}
+                        </option>
+                      </select>
+                  </div>
+                  <div class="">
+                    <label for="section">Section:</label>
+                    <select
+                      id="section"
+                      class=""
+                      [(ngModel)]="addsubjectrequest.sectionId"
+                      [(ngModel)]="selectedse"
+                      name="section"
+                      #section
+                      (change)="sectionName(section.selectedOptions[0].text);"
+                    >
+                      <option selected>--Select Section--</option>
+                      <option *ngFor="let section of sections" [value]="section.id">
+                        {{ section.name }}
+                      </option>
+                    </select>
+                  </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="">
+                      <label for="class">Class:</label>
+                      <select
+                        id="class"
+                        class=""
+                        [(ngModel)]="addsubjectrequest.classId"
+                        [(ngModel)]="selectedcl"
+                        name="class"
+                        #class
+                        (change)="onClassChange($event);getsubject($event); className(class.selectedOptions[0].text);"
+                      >
+                        <option selected>--Select Class--</option>
+                        <option *ngFor="let class of classes" [value]="class.id">
+                          {{ class.name }}
+                        </option>
+                      </select>
+                    </div>
+                    <div *ngIf="addsubjectrequest.sectionId!=0">
+                      <label for="subject">Subjects:</label><br><br>
+                      <div class="form-check form-check-inline" *ngFor="let subject of subjects">
+                        <input class="form-check-input" type="checkbox" [id]="subject.id" [value]="subject.id" #subject (change)="handleChange($event,subject.name);"/>
+                        <label class="form-check-label" [for]="subject">{{ subject.name }}</label>
+                     </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            </div>
             <div class="table-responsive">
               <table id="students" *ngIf="subj&&subj.length>0">
                 <thead>
@@ -106,6 +121,7 @@
                     <th>Class</th>
                     <th>Section</th>
                     <th>Subject</th>
+                    <!-- <th>Action</th> -->
                   </tr>
                 </thead>
                 <tbody>
@@ -114,14 +130,15 @@
                     <td><span>{{sub.className}}</span></td>
                     <td><span>{{sub.sectionName}}</span></td>
                     <td><span>{{sub.name}}</span></td>
+                    <!-- <td><button type="button" class="custom button2 ad del" (click)="removeSubject(sub)" title="Delete"><i class="fa fa-trash "></i></button>
+                    </td> -->
                   </tr>
                 </tbody>
               </table>    
             </div>
                 <br>
-                <button type="button" class="custom button1 ad addsub" (click)="addMoreSubjects()" title="Add Subject" [disabled]="this.subj1.length==0"><i class="fa fa-plus"></i></button>
-                <button type="submit" class="custom button1 ad" [disabled]="!formGrp.valid||this.bool1||this.bool2">Add</button>
-                <button type="button" class="custom button1 ad del" (click)="btnClick1();">Back</button>
+                <button *ngIf="this.ind==0" type="button" class="custom button1 ad addsub" (click)="handleButtonClick()" title="Add Subject" [disabled]="this.subj1.length==0"><i class="fa fa-plus"></i></button>
+                <button *ngIf="this.ind==0" type="button" class="custom button1 ad del" (click)="btnClick1();" [disabled]="this.subj1.length==0">Save</button>
             </form>
     </div>
     <app-footer></app-footer>

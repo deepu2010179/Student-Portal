@@ -28,7 +28,6 @@ export class AppComponent implements OnInit {
         this.shouldShowNavBar2 = this.sh.roles.includes('admin');
         localStorage.setItem('a',JSON.stringify(this.shouldShowNavBar));
         localStorage.setItem('b',JSON.stringify(this.shouldShowNavBar2));
-        console.log(this.a())
       }
     });
   }
