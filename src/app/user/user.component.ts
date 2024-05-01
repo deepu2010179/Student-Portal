@@ -6,6 +6,10 @@ import { user1 } from '../models/user1.model';
 import { DialogComponent,ConfirmDialogModel } from '../dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import * as forge from 'node-forge';
+import { ColDef,GridApi,
+  GridOptions,
+  GridReadyEvent,
+  createGrid } from 'ag-grid-community';
 
 @Component({
   selector: 'app-user',
@@ -20,6 +24,7 @@ export class UserComponent implements OnInit {
     this.userservice.getAllUsers().subscribe({
       next:(users)=>{
         this.users=users;
+        this.rowData=users;
       }
     })
   }
@@ -69,7 +74,7 @@ export class UserComponent implements OnInit {
     });
   }
   deleteSelectedRecords() {
-    this.selectedRecords.forEach(recordId => {
+    this.selectedRecordIds.forEach(recordId => {
       this.userservice.deleteUser(recordId.id).subscribe(
         () => {
         },
@@ -111,4 +116,22 @@ export class UserComponent implements OnInit {
     const user = this.userservice.getLoggedInUser();
     return user;
   }
+  rowData:any=[];
+  columnDefs: ColDef[] = [
+    { headerName: 'UserName', field: 'username', sortable: true, filter: true,width:500},
+    { headerName: 'Email', field: 'email', sortable: true, filter: true,width:500},
+    { headerName: 'Role(s)', field: 'role', sortable: true, filter: true,width:299 }
+  ];
+    selectedRecordIds: user1[] = [];
+    gridApi!: GridApi;
+    public paginationPageSize = 5;
+    public paginationPageSizeSelector: number[] | boolean = [5, 10, 20,50,100];
+    public rowSelection: "single" | "multiple" = "multiple";
+    onSelectionChanged(): void {
+      const selectedRows = this.gridApi.getSelectedRows();
+      this.selectedRecordIds = selectedRows.map(row => row);
+    }
+    onGridReady(params:any): void {
+      this.gridApi = params.api;
+    }
 }

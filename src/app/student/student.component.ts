@@ -1,4 +1,4 @@
-import { Component,ElementRef,OnInit, ViewChild } from '@angular/core';
+import { Component,NgZone,ElementRef,OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
 import { StudentService } from './student.service';
 import { student } from '../models/student.model';
@@ -7,6 +7,11 @@ import { Console, error } from 'console';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent,ConfirmDialogModel } from '../dialog/dialog.component';
 import { SortPipe } from '../pipe/sort.pipe';
+import { AgGridAngular } from 'ag-grid-angular';
+import { ColDef,GridApi,
+  GridOptions,
+  GridReadyEvent,
+  createGrid } from 'ag-grid-community';
 
 @Component({
   selector: '[app-student]',
@@ -25,7 +30,7 @@ export class StudentComponent implements OnInit{
   selectedRecords: Array<student> = [];
   state: any;
   name:any;
-  constructor(private studentService: StudentService,private router:Router,private mat:MatDialog,private dia:DialogComponent
+  constructor(private ngZone:NgZone,private studentService: StudentService,private router:Router,private mat:MatDialog,private dia:DialogComponent
     ){
    
   }
@@ -35,6 +40,7 @@ export class StudentComponent implements OnInit{
     this.studentService.getAllRecords().subscribe({
       next:(students)=>{
         this.studentss=students;
+        this.rowData=students;
       }
     })
     this.loadPaginatedData();
@@ -94,7 +100,7 @@ deleteallrecords(){
 }
   deleteSelectedRecords() {
     this.showmessage = false;
-    this.selectedRecords.forEach(recordId => {
+    this.selectedRecordIds.forEach(recordId => {
       this.studentService.deleteStudent(recordId.id).subscribe(
         () => {
         },
@@ -184,4 +190,44 @@ getLoggedInUserName(): string {
   const user = this.studentService.getLoggedInUser();
   return user;
 }
+rowData:any=[];
+columnDefs: ColDef[] = [
+  { headerName: 'Code', field: 'code', sortable: true, filter: true,pinned: 'left'},
+  { headerName: 'Name', field: 'name', sortable: true, filter: true,pinned: 'left'},
+  { headerName: 'Email', field: 'email', sortable: true, filter: true },
+  { headerName: 'Mobile', field: 'mobile', sortable: true, filter: true },
+  { headerName: 'Address1', field: 'address1', sortable: true, filter: true },
+  { headerName: 'Address2', field: 'address2', sortable: true, filter: true },
+  { headerName: 'State', field: 'stateName', sortable: true, filter: true },
+  { headerName: 'City', field: 'cityName', sortable: true, filter: true },
+  { headerName: 'Gender', field: 'genderName', sortable: true, filter: true },
+  { headerName: 'Marital Status', field: 'maritalStatusName', sortable: true, filter: true },
+  { headerName: 'Course', field: 'courseName', sortable: true, filter: true },
+  { headerName: 'Class', field: 'className', sortable: true, filter: true },
+  { headerName: 'Section', field: 'sectionName', sortable: true, filter: true },
+  { field: "actions", headerName: "Actions", cellRenderer:  (params:any) => {
+    const button = document.createElement('button');
+    button.innerHTML = '<i class="fa fa-pencil"></i>';
+    button.classList.add('but1','button1');
+    button.title='Edit';
+    this.ngZone.run(() => {
+      button.addEventListener('click', () => {
+        this.router.navigate(['/students','edit',params.node.data.id])
+      });
+    });
+    return button;
+  }}
+];
+  selectedRecordIds: student[] = [];
+  gridApi!: GridApi;
+  public paginationPageSize = 5;
+  public paginationPageSizeSelector: number[] | boolean = [5, 10, 20,50,100];
+  public rowSelection: "single" | "multiple" = "multiple";
+  onSelectionChanged(): void {
+    const selectedRows = this.gridApi.getSelectedRows();
+    this.selectedRecordIds = selectedRows.map(row => row);
+  }
+  onGridReady(params:any): void {
+    this.gridApi = params.api;
+  }
 }

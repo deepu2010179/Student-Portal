@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild,NgZone } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StudentService } from '../student/student.service';
@@ -15,6 +15,11 @@ import { section } from '../models/section.model';
 import { subject } from '../models/subject.model';
 import { subject1 } from '../models/subject1.model';
 import { subject2 } from '../models/subject2.model';
+import { AgGridAngular } from 'ag-grid-angular';
+import { ColDef,GridApi,
+  GridOptions,
+  GridReadyEvent,
+  createGrid } from 'ag-grid-community';
 
 @Component({
   selector: 'app-editteacher',
@@ -31,7 +36,7 @@ export class EditteacherComponent implements OnInit{
   subj:Array<subject1>=[];
   subj1:Array<subject1>=[];
   ind:number=-1;
-  constructor(private fb:FormBuilder,private route:ActivatedRoute,private service:StudentService,private router:Router,private mat:MatDialog,private dia:DialogComponent,private sh:SharedService){
+  constructor(private ngZone:NgZone,private fb:FormBuilder,private route:ActivatedRoute,private service:StudentService,private router:Router,private mat:MatDialog,private dia:DialogComponent,private sh:SharedService){
     this.formGrp=fb.group({
       Name1:['',[Validators.required,Validators.pattern("^[A-Za-z ]+$")]]
     })
@@ -72,6 +77,8 @@ export class EditteacherComponent implements OnInit{
   }
   public teacherId:string|null='';
   ngOnInit(): void {
+    this.showadd=false;
+    this.showadd1=true;
     this.service.getCourses().subscribe((courses: any) => {
       this.courses = courses;
     });
@@ -95,6 +102,7 @@ export class EditteacherComponent implements OnInit{
     });
     this.service.getSubjectById(this.teacherId).subscribe((data:any)=>{
       this.subje=data;
+      this.rowData=data;
     })
   }
   addSubjects(){
@@ -165,6 +173,12 @@ export class EditteacherComponent implements OnInit{
       this.subj1.splice(indexToRemove,1);
     }
   }
+  showadd:boolean=false;
+  showadd1:boolean=true;
+  show(){
+    this.showadd=true;
+    this.showadd1=false;
+  }
   addMoreSubjects() {
     this.subj1.forEach((value)=>{
       if(!this.subj.includes(value))
@@ -233,7 +247,7 @@ selectedco:string='--Select Course--';
     });
   }
   deleteSelectedRecords() {
-    this.selectedRecords.forEach(recordId => {
+    this.selectedRecordIds.forEach(recordId => {
       this.service.deleteSubjectById(recordId.id).subscribe(
         () => {
         },
@@ -284,5 +298,24 @@ selectedco:string='--Select Course--';
   getLoggedInUserName(): string {
     const user = this.service.getLoggedInUser();
     return user;
+  }
+  rowData:any=[];
+columnDefs: ColDef[] = [
+  { headerName: 'Course', field: 'courseName', sortable: true, filter: true,width:300 },
+  { headerName: 'Class', field: 'className', sortable: true, filter: true,width:300 },
+  { headerName: 'Section', field: 'sectionName', sortable: true, filter: true,width:300 },
+  { headerName: 'Subject', field: 'subjectName', sortable: true, filter: true,width:398 }
+];
+  selectedRecordIds: subject3[] = [];
+  gridApi!: GridApi;
+  public paginationPageSize = 5;
+  public paginationPageSizeSelector: number[] | boolean = [5, 10, 20,50,100];
+  public rowSelection: "single" | "multiple" = "multiple";
+  onSelectionChanged(): void {
+    const selectedRows = this.gridApi.getSelectedRows();
+    this.selectedRecordIds = selectedRows.map(row => row);
+  }
+  onGridReady(params:any): void {
+    this.gridApi = params.api;
   }
 }

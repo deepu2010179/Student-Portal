@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,NgZone} from '@angular/core';
 import { Class } from '../models/class.model';
 import { StudentService } from '../student/student.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -6,6 +6,10 @@ import { ConfirmDialogModel, DialogComponent } from '../dialog/dialog.component'
 import { Router } from '@angular/router';
 import { SharedService } from '../student/shared.service';
 import { section } from '../models/section.model';
+import { ColDef,GridApi,
+  GridOptions,
+  GridReadyEvent,
+  createGrid } from 'ag-grid-community';
 
 @Component({
   selector: 'app-class',
@@ -35,7 +39,7 @@ export class ClassComponent implements OnInit{
     this.refresh();
   }
   selectedRecords: Array<Class> = [];
-  constructor(private service:StudentService,private router:Router,private mat:MatDialog,private sh:SharedService){}
+  constructor(private ngZone:NgZone,private service:StudentService,private router:Router,private mat:MatDialog,private sh:SharedService){}
   public courseid:string|null='';
   public classId:string|null='';
   ngOnInit(): void{
@@ -78,7 +82,7 @@ export class ClassComponent implements OnInit{
     });
   }
   deleteSelectedRecords() {
-    this.selectedRecords.forEach(recordId => {
+    this.selectedRecordIds.forEach(recordId => {
       this.service.deleteClass(recordId.id).subscribe(
         () => {
         },
@@ -124,6 +128,7 @@ export class ClassComponent implements OnInit{
     this.service.getClassByCourseId(id).subscribe({
       next:(classes)=>{
         this.classes=classes;
+        this.rowData=classes;
       }
     })
   }
@@ -138,5 +143,34 @@ export class ClassComponent implements OnInit{
       .catch(error => {
         console.log('Dialog error:', error);
       });
+  }
+  rowData:any=[];
+columnDefs: ColDef[] = [
+  { headerName: 'Name', field: 'name', sortable: true, filter: true,width:450},
+  { headerName: 'Session', field: 'session', sortable: true, filter: true,width:450 },
+  { field: "actions", headerName: "Actions",width:398, cellRenderer:  (params:any) => {
+    const button = document.createElement('button');
+    button.innerHTML = '<i class="fa fa-pencil"></i>';
+    button.classList.add('but1','button1');
+    button.title='Edit';
+    this.ngZone.run(() => {
+      button.addEventListener('click', () => {
+        this.router.navigate(['/students/class','edit',params.node.data.id]);
+      });
+    });
+    return button;
+  }}
+];
+  selectedRecordIds: Class[] = [];
+  gridApi!: GridApi;
+  public paginationPageSize = 5;
+  public paginationPageSizeSelector: number[] | boolean = [5, 10, 20,50,100];
+  public rowSelection: "single" | "multiple" = "multiple";
+  onSelectionChanged(): void {
+    const selectedRows = this.gridApi.getSelectedRows();
+    this.selectedRecordIds = selectedRows.map(row => row);
+  }
+  onGridReady(params:any): void {
+    this.gridApi = params.api;
   }
 }

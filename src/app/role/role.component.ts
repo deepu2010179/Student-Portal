@@ -4,7 +4,10 @@ import { StudentService } from '../student/student.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogModel, DialogComponent } from '../dialog/dialog.component';
-
+import { AgGridEvent, ColDef,GridApi,
+  GridOptions,
+  GridReadyEvent,
+  createGrid } from 'ag-grid-community';
 @Component({
   selector: 'app-role',
   templateUrl: './role.component.html',
@@ -18,6 +21,7 @@ export class RoleComponent implements OnInit {
     this.roleservice.getAllRoles().subscribe({
       next:(roles)=>{
         this.roles=roles;
+        this.rowData=roles;
       }
     })
   }
@@ -47,7 +51,7 @@ export class RoleComponent implements OnInit {
     });
   }
   deleteSelectedRecords() {
-    this.selectedRecords.forEach(recordId => {
+    this.selectedRecordIds.forEach(recordId => {
       this.roleservice.deleteRole(recordId.id).subscribe(
         () => {
         },
@@ -89,5 +93,23 @@ export class RoleComponent implements OnInit {
     const user = this.roleservice.getLoggedInUser();
     return user;
   }
-
+  onSortChanged(e:any) {
+    e.api.refreshCells();
+  }
+  rowData:any=[];
+  columnDefs: ColDef[] = [
+    { headerName: 'Role', field: 'role_name', sortable: true, filter: true,width:1296}
+  ];
+    selectedRecordIds: role[] = [];
+    gridApi!: GridApi;
+    public paginationPageSize = 5;
+    public paginationPageSizeSelector: number[] | boolean = [5, 10, 20,50,100];
+    public rowSelection: "single" | "multiple" = "multiple";
+    onSelectionChanged(): void {
+      const selectedRows = this.gridApi.getSelectedRows();
+      this.selectedRecordIds = selectedRows.map(row => row);
+    }
+    onGridReady(params:any): void {
+      this.gridApi = params.api;
+    }
 }

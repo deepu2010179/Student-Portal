@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StudentComponent } from '../student/student.component';
 import { CredentialResponse,PromptMomentNotification } from 'google-one-tap';
 import { MsalService } from '@azure/msal-angular';
-import { filter, takeUntil } from 'rxjs';
+import { async, filter, takeUntil } from 'rxjs';
 import { InteractionStatus } from '@azure/msal-browser';
 import { SharedService } from '../student/shared.service';
 
@@ -53,13 +53,15 @@ export class LoginComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
     });
-    this.auth.instance.initialize();
-    this.auth.instance.handleRedirectPromise().then((res) => {
-      if (res != null && res.account != null) {
-        this.auth.instance.setActiveAccount(res.account);
-      }
-    });
-    
+    this.ino();
+  }
+  async ino(){
+    await this.auth.instance.initialize();
+    // await this.auth.instance.handleRedirectPromise().then((res) => {
+    //   if (res != null && res.account != null) {
+    //     this.auth.instance.setActiveAccount(res.account);
+    //   }
+    // });
   }
   private _destroying$(_destroying$: any): any {
     throw new Error('Method not implemented.');
@@ -143,29 +145,32 @@ export class LoginComponent implements OnInit {
       passwordInput.type = 'password';
     }
   }
+  async handlemicro(result:any){
+    await this.authService.LoginWithMicrosoft(result.accessToken).subscribe(
+      (response)=>{
+        this.data=response;
+        this.res=this.data.role;
+        this.sh.setRoles(this.res.result);
+        localStorage.setItem('token', response.token);
+        this,this.authService.logedname=response.userName;
+        this._ngZone.run(()=>{
+          if(this.res.result.length>1)
+            this.router.navigate(['students']);
+            else{
+              if(this.res.result[0]=="admin")
+                this.router.navigate(['students']);
+              else
+              this.router.navigate(['students/studentpage']);
+            }
+        })
+      }
+    );
+  }
  async loginwithmicro() {
-    this.auth.loginPopup()
+   await this.auth.loginPopup()
       .subscribe({
         next: (result) => {
-          this.authService.LoginWithMicrosoft(result.accessToken).subscribe(
-            (response)=>{
-              this.data=response;
-              this.res=this.data.role;
-              this.sh.setRoles(this.res.result);
-              localStorage.setItem('token', response.token);
-              this,this.authService.logedname=response.userName;
-              if(this.res.result.length>1)
-                this.router.navigate(['students']);
-                else{
-                  if(this.res.result[0]=="admin")
-                    this.router.navigate(['students']);
-                  else
-                  this.router.navigate(['students/studentpage']);
-                }
-            }
-          );
-          
-          console.log(result);
+          this.handlemicro(result);
         },
         error: (error) => console.log(error)
       });
@@ -174,9 +179,11 @@ export class LoginComponent implements OnInit {
     this.loginDisplay = this.auth.instance.getAllAccounts().length > 0;
   }
   logout() { 
-    this.auth.logoutRedirect({
-      postLogoutRedirectUri: 'http://localhost:4200/'
-    });
+    this._ngZone.run(()=>{
+      this.auth.logoutRedirect({
+        postLogoutRedirectUri: 'http://localhost:4200/'
+      });
+    })
   }
   
 }

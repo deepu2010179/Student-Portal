@@ -226,4 +226,8 @@ removeSubject(subject: subject1) {
       })
     }
   }
+  deletesub(id:number){
+    this.studentService.deleteSubjectById(id).subscribe(()=>{
+    });
+  }
 }

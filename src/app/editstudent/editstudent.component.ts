@@ -1,4 +1,4 @@
-import { Component, OnInit,ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit,ElementRef, ViewChild,ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { StudentService } from '../student/student.service';
 import { student } from '../models/student.model';
@@ -25,7 +25,7 @@ export class EditstudentComponent implements OnInit {
   formGrp:FormGroup; 
   mobile:string;
   email:string;
-  constructor(private fb:FormBuilder,private route:ActivatedRoute,private studentservice:StudentService,private router:Router,private mat:MatDialog,private dia:DialogComponent){
+  constructor(private cdr: ChangeDetectorRef,private fb:FormBuilder,private route:ActivatedRoute,private studentservice:StudentService,private router:Router,private mat:MatDialog,private dia:DialogComponent){
     this.mobile='';
     this.email='';
     this.formGrp=fb.group({
@@ -131,6 +131,9 @@ export class EditstudentComponent implements OnInit {
     dialogRef.afterClosed().subscribe(dialogResult => {
       if(dialogResult)
       this.updatestudent();
+      setTimeout(() => {
+        this.cdr.detectChanges();
+      });
     });
   }
 //   txt:boolean=false;

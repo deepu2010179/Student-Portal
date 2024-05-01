@@ -21,10 +21,10 @@
       <div class="col-2">
         <div class="rap">
           <button type="button" class="custom button1 ad" (click)="btnClick();" title="Add"><i class="fa fa-plus"></i></button>  
-          <button type="button" class="custom button2 ad del" (click)="confirmDialog();" [disabled]="selectedRecords.length === 0" title="Delete"><i class="fa fa-trash "></i></button>
+          <button type="button" class="custom button2 ad del" (click)="confirmDialog();" [disabled]="selectedRecordIds.length === 0" title="Delete"><i class="fa fa-trash "></i></button>
         </div>
       </div>
-      <div class="col-2">
+      <!-- <div class="col-2">
         <label for="management">Select Management:</label>
           <select id="management" class="" name="management" (change)="btnClick1();" #management [(ngModel)]="selectedm">
             <option [selected]="true">--Select Management--</option>
@@ -33,16 +33,16 @@
             <option value="course">Course Management</option>
             <option value="teacher">Teacher Management</option>
           </select>
-      </div>
-      <div class="col-6">
+      </div> -->
+      <!-- <div class="col-6">
         <div>
           <label for="">Search:</label>
           <input type="text" placeholder="Search By Name" name="name" [(ngModel)]="name" (ngModelChange)="search()">
         </div>
         <div>
         </div>
-      </div>
-      <div class="col-1">
+      </div> -->
+      <!-- <div class="col-1">
         <div>
           <label for="pagesize">Page Size:</label>
           <select id="pagesize" class="" name="pagesize" (change)="onPageSizeChange()" #pagesize>
@@ -53,12 +53,12 @@
             <option value="100">100</option>
           </select>
         </div>
-      </div>
+      </div> -->
       <div class="col-1 rap1">
         <button id="h2" type="button" class="custom button1 ad" (click)="exportToExcel()" title="Export to Excel"><i class="fa fa-file"></i></button>
       </div>
      </div>
-     <div class="table-responsive">
+     <!-- <div class="table-responsive">
       <table id="students" *ngIf="students&&students.length>0">
         <thead>
           <tr>
@@ -102,13 +102,27 @@
           </tr>
         </tbody>
       </table>    
-    </div>
-    <div class="page">
+    </div> -->
+      <ag-grid-angular
+        class="ag-theme-quartz"
+        style="height: 326px;"
+        [rowData]="rowData"
+        [columnDefs]="columnDefs"
+        [pagination]="true"
+        [paginationPageSize]="paginationPageSize"
+        [paginationPageSizeSelector]="paginationPageSizeSelector"
+        [rowSelection]="rowSelection"
+        [rowMultiSelectWithClick]="true"
+        (selectionChanged)="onSelectionChanged()"
+        (gridReady)="onGridReady($event)"
+        >
+      </ag-grid-angular>
+    <!-- <div class="page">
       <button class="custom button1" (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1" title="Previous"><i class="fa fa-arrow-left"></i></button>
       <span class="pageno">Page {{ currentPage }}/{{totalpages}}</span>
       <button class="custom button1" (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalpages"  title="Next"><i class="fa fa-arrow-right"></i></button>
-    </div>
-    <h5 *ngIf="!students||students.length<=0" class="alert alert-danger">Not Found!!</h5>
+    </div> -->
+    <!-- <h5 *ngIf="!students||students.length<=0" class="alert alert-danger">Not Found!!</h5> -->
     </div>
     <app-footer></app-footer>
   </div>

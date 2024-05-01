@@ -48,6 +48,7 @@ import { EditclassComponent } from './editclass/editclass.component';
 import { SubjectComponent } from './subject/subject.component';
 import { AddsubjectComponent } from './addsubject/addsubject.component';
 import { EditsubjectComponent } from './editsubject/editsubject.component';
+import { AgGridModule } from 'ag-grid-angular';
 
 @NgModule({
   declarations: [
@@ -94,6 +95,7 @@ import { EditsubjectComponent } from './editsubject/editsubject.component';
     MatButtonModule,
     MatIconModule,
     MatFormFieldModule,
+    AgGridModule,
     MatInputModule,
     MatDialogModule,
     NgxPaginationModule,

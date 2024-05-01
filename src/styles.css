@@ -1,3 +1,5 @@
+@import 'ag-grid-community/styles/ag-grid.css';
+@import 'ag-grid-community/styles/ag-theme-quartz.css';
 *{
     margin: 0;
     padding:0;
@@ -51,6 +53,19 @@ label{
     border-radius: 10px;
     color: white;
     padding: 5px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    transition-duration: 0.4s;
+}
+.but1 {
+    width: 60px !important;
+    height: 35px !important;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    padding: -2px -2px;
     text-align: center;
     text-decoration: none;
     display: inline-block;

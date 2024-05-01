@@ -8,10 +8,10 @@
             <div class="col-2">
               <div class="rap">
                 <button type="button" class="custom button1 ad" (click)="btnClick();" title="Add Section"><i class="fa fa-plus"></i></button>  
-                <button type="button" class="custom button2 ad del" (click)="confirmDialog();" [disabled]="selectedRecords.length === 0" title="Delete Section"><i class="fa fa-trash "></i></button>
+                <button type="button" class="custom button2 ad del" (click)="confirmDialog();" [disabled]="selectedRecordIds.length === 0" title="Delete Section"><i class="fa fa-trash "></i></button>
               </div>
             </div>
-          <div class="table-responsive">
+          <!-- <div class="table-responsive">
               <table id="students" *ngIf="sections&&sections.length>0">
                 <thead>
                   <tr>
@@ -29,7 +29,21 @@
                   </tr>
                 </tbody>
               </table>    
-            </div>
+            </div> -->
+            <ag-grid-angular
+        class="ag-theme-quartz"
+        style="height: 330px;"
+        [rowData]="rowData"
+        [columnDefs]="columnDefs"
+        [pagination]="true"
+        [paginationPageSize]="paginationPageSize"
+        [paginationPageSizeSelector]="paginationPageSizeSelector"
+        [rowSelection]="rowSelection"
+        [rowMultiSelectWithClick]="true"
+        (selectionChanged)="onSelectionChanged()"
+        (gridReady)="onGridReady($event)"
+        >
+      </ag-grid-angular>
             <!-- <div class="page">
               <button type="button" class="custom button1 ad del" (click)="btnClick1();">Back</button>
             </div> -->
