@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StudentService } from '../student/student.service';
@@ -34,6 +34,7 @@ export class EditclassComponent implements OnInit{
     modifiedBy: 0,
     modifiedOn: new Date()
   };
+  @Input() classId!: number;
   public courseId:string|null='';
   ngOnInit(): void {
     this.sh.courseId$.subscribe(id => {
@@ -52,6 +53,14 @@ export class EditclassComponent implements OnInit{
         }
       }
     })
+    if(this.classId){
+      this.sh.setClassId(this.classId.toString());
+      this.service.getClass(this.classId.toString()).subscribe({
+        next:(response)=>{
+          this.editClassrequest=response;
+        }
+      });
+    }
   }
   confirmDialog(): void {
     const message = `Are you sure you want to Edit ?`;

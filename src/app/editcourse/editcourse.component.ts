@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogModel, DialogComponent } from '../dialog/dialog.component';
 import { course } from '../models/course.model';
 import { SharedService } from '../student/shared.service';
+import { Input } from '@angular/core';
 
 @Component({
   selector: 'app-editcourse',
@@ -32,6 +33,7 @@ export class EditcourseComponent implements OnInit{
     modifiedBy: 0,
     modifiedOn: new Date()
   };
+  @Input() courseId!: number;
   ngOnInit(): void {
     this.route.paramMap.subscribe({
       next:(params)=>{
@@ -46,6 +48,14 @@ export class EditcourseComponent implements OnInit{
         }
       }
     })
+    if (this.courseId) {
+      this.sh.setCourseId(this.courseId.toString());
+      this.service.getCourse(this.courseId.toString()).subscribe({
+        next: (response) => {
+          this.editCourserequest = response;
+        }
+      });
+    }
   }
   confirmDialog(): void {
     const message = `Are you sure you want to Edit ?`;

@@ -24,6 +24,7 @@ import { ClassComponent } from './class/class.component';
 import { EditsectionComponent } from './editsection/editsection.component';
 import { AddsubjectComponent } from './addsubject/addsubject.component';
 import { EditsubjectComponent } from './editsubject/editsubject.component';
+import { TreeviewComponent } from './treeview/treeview.component';
 
 const routes: Routes = [
   {
@@ -130,6 +131,10 @@ const routes: Routes = [
                 path:'students/subject/edit/:id',
                 component:EditsubjectComponent
                 },
+                {
+                  path:'students/course/treeview',
+                  component:TreeviewComponent
+                  },
         {
           path:'login',
           component:LoginComponent

@@ -112,6 +112,9 @@ label{
 .del{
     margin-left: 10px;
 }
+.del1{
+    margin-left: 85.5%;
+}
 .show{
     color: red;
 }
@@ -357,4 +360,15 @@ th {
 .addsub{
     margin-right: 1%;
 }
-
+.tree{
+    background-color: #a4a7a7;
+}
+.treeview{
+    background-color: transparent !important;
+}
+.x {
+    background-color: transparent !important;
+  }
+.y{
+    margin-top: 5%;
+  }

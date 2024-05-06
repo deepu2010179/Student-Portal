@@ -1,0 +1,52 @@
+<div class="container-fluid main">
+    <div class="main1">
+      <div class="row">
+        <div class="col-10"><h1 id="h1"> Tree View</h1></div>
+      </div>
+        <hr>
+        <div class="row">
+          <div class="col-12">
+            <div class="rap">
+              <button type="button" class="custom button1 ad" (click)="btnClick();" title="List View"><i class="fa fa-list"></i></button>
+            </div>
+          </div>
+        <div class="row">
+          <div class="col-4">
+            <div class="y">
+              <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="treeview">
+                  <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding class="x">
+                    <button mat-icon-button disabled></button>
+                    {{node.name}}
+                  </mat-tree-node>
+                  <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding class="x">
+                    <button mat-icon-button matTreeNodeToggle
+                            [attr.aria-label]="'Toggle ' + node.name" class="tree" (click)="func1(node)">
+                      <mat-icon class="mat-icon-rtl-mirror">
+                        {{treeControl.isExpanded(node) ? 'expand_more' : 'trending_flat'}}
+                      </mat-icon>
+                    </button>
+                    {{node.name}}
+                    <!-- <button mat-icon-button class="btn-course" *ngIf="node.name !== 'Courses'">
+                      <i class="fa fa-plus"></i>
+                    </button> -->
+                  </mat-tree-node>
+              </mat-tree>
+          </div>
+          </div>
+          <div class="col-8">
+            <div *ngIf="showaddcourse">
+              <app-addcourse></app-addcourse>
+            </div>
+            <div *ngIf="showeditcourse">
+              <app-editcourse [courseId]="this.courseId"></app-editcourse>
+            </div>
+            <div *ngIf="showeditclass">
+              <app-editclass [classId]="this.classId"></app-editclass>
+            </div>
+          </div>
+        </div>
+    </div>
+    <app-footer></app-footer>
+</div>    
+
+  

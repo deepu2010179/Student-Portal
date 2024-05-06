@@ -49,6 +49,8 @@ import { SubjectComponent } from './subject/subject.component';
 import { AddsubjectComponent } from './addsubject/addsubject.component';
 import { EditsubjectComponent } from './editsubject/editsubject.component';
 import { AgGridModule } from 'ag-grid-angular';
+import { TreeviewComponent } from './treeview/treeview.component';
+import { MatTreeModule } from '@angular/material/tree';
 
 @NgModule({
   declarations: [
@@ -82,9 +84,11 @@ import { AgGridModule } from 'ag-grid-angular';
     EditclassComponent,
     SubjectComponent,
     AddsubjectComponent,
-    EditsubjectComponent
+    EditsubjectComponent,
+    TreeviewComponent
   ],
   imports: [
+    MatTreeModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,

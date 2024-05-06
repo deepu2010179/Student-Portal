@@ -141,4 +141,7 @@ columnDefs: ColDef[] = [
         // this.gridOptions.api.setColumnDefs(this.columnDefs);
     }
   }
+  btnClick2(){
+    this.router.navigateByUrl('students/course/treeview');
+  }
 }

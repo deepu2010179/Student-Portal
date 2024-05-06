@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StudentService } from '../student/student.service';
@@ -34,6 +34,7 @@ export class EditsectionComponent {
     modifiedOn: new Date()
   };
   public classId:string|null='';
+  @Input() sectionId!: number;
   ngOnInit(): void {
     this.sh.classId$.subscribe(id => {
       this.classId = id;
@@ -50,6 +51,13 @@ export class EditsectionComponent {
         }
       }
     })
+    if(this.sectionId){
+      this.service.getSection(this.sectionId.toString()).subscribe({
+        next:(response)=>{
+          this.editSectionrequest=response;
+        }
+      });
+    }
   }
   confirmDialog(): void {
     const message = `Are you sure you want to Edit ?`;

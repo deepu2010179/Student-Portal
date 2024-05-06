@@ -444,4 +444,8 @@ private loggedIn = false;
 
     return dialogRef.afterClosed().toPromise();
   }
+  gettree(){
+  const headers = this.getHeaders();
+  return this.http.get<any>(this.baseApiUrl+'/api/Student/TreeView',{headers});
+  }
 }
